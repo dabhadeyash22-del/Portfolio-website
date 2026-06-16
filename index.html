@@ -1,0 +1,95 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yash Rakesh Dabhade | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+    <header class="container">
+        <a href="index.html" class="logo">My Portfolio</a>
+                <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="reference.html">Reference</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+
+            <button id="theme-toggle" class="theme-btn">
+            <i class="fa-solid fa-moon"></i>
+            </button>
+
+</header>
+    </header>
+    <section id="home" class="home">
+        <div class="home-container">
+            <img src="img.jpeg" alt="Yash R Dabhade profile photo">
+
+            <div class="Info-Box">
+                <div class="Text">
+                    <h3>Hi, I'm</h3>
+                    <h1>Yash R Dabhade</h1>
+                    <span>Programmer | Web Developer</span>
+                </div>
+
+                <div class="btn-group">
+                    <a href="Yash Rakesh Dabhade Resume.pdf" download class="btn">Download CV</a>
+                    <a href="contact.html" class="btn">Contact Me</a>
+                </div>
+
+                <div class="Socials">
+                    <a href="https://github.com/dabhadeyash22-del" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-github"></i>
+                    </a>
+                    <a href="https://www.linkedin.com/in/yash-dabhade-aa4a79327" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-linkedin"></i>
+                    </a>
+                    <a href="https://www.instagram.com/_yash__dabhade_?igsh=MWY5N29vbHJqbWt2ag==" target="_blank" rel="noopener noreferrer">
+                        <i class="fa-brands fa-instagram"></i>
+                    </a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; // © 2026 SPCL Infotech Pvt Ltd. All Rights Reserved.</p>
+
+                <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="skills.html">Skills</a>
+            <a href="project.html">Projects</a>
+            <a href="reference.html">Reference</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </footer>
+
+    <script>
+        const themeToggle = document.getElementById("theme-toggle");
+
+        themeToggle.addEventListener("click", () => 
+            {
+                document.body.classList.toggle("dark-mode");
+                if(document.body.classList.contains("dark-mode"))
+                    {
+                        themeToggle.innerHTML ='<i class="fa-solid fa-sun"></i>';
+                    }
+                else
+                    {
+                        themeToggle.innerHTML ='<i class="fa-solid fa-moon"></i>';
+                    }
+                }
+            );
+    </script>
+</body>
+</html>
+
+
+

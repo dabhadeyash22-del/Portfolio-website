@@ -1,0 +1,96 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yash Rakesh Dabhade | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+    <header class="container">
+        <a href="index.html" class="logo">My Portfolio</a>
+                <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="reference.html">Reference</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <button id="theme-toggle" class="theme-btn">
+            <i class="fa-solid fa-moon"></i>
+            </button>
+    </header>
+    <section id="reference" class="reference">
+        <h2 class="section-title">Reference</h2>
+
+        <div class="reference-container">
+            <img src="Sanjay sir.jpg" alt="Mr. Sanjay Shah">
+
+            <div class="reference-text">
+                <h3>Founder President</h3>
+                <h1>Mr.Sanjay Shah</h1>
+                <p>Sanjay Shah is the Founder of SPCL Infotech Services Pvt. Ltd., established in 2018.
+                He brings 25 years of management experience and has played an important role in building
+                the company through strategic planning, alliances, and partnerships.</p>
+                <p>Under his active participation, SPCL Infotech Services Pvt. Ltd. has grown in software
+                development, testing, Big Data Analytics, and several computer and IT applications.
+                He received his master's degree in 1983 from Shivaji University, Kolhapur.</p>
+                <div class="company-details">
+                    <h2>Company Details</h2>
+                    <p><strong>Company Name:</strong> SPCL Infotech Services Pvt. Ltd.</p>
+                    <p><strong>Work Area:</strong> Software Development, Testing, Big Data Analytics, and IT Services.</p>
+                    <p><strong>Location:</strong> Pune, Maharashtra, India.</p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="map-container">
+           <iframe
+                src="https://www.google.com/maps/embed?pb=!1m18!1m12!1m3!1d15135.967396049293!2d73.78284320297278!3d18.4840284063972!2m3!1f0!2f0!3f0!3m2!1i1024!2i768!4f13.1!3m3!1m2!1s0x3bc2bf40b5bb75a3%3A0x93c2e9a67c9a13c7!2sSPCL%20Infotech%20Services%20Pvt.%20Ltd.!5e0!3m2!1sen!2sin!4v1780568819641!5m2!1sen!2sin"
+                width="100%"
+                height="300"
+                style="border:0;"
+                allowfullscreen=""
+                loading="lazy"
+                referrerpolicy="no-referrer-when-downgrade">
+            </iframe>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; // © 2026 SPCL Infotech Pvt Ltd. All Rights Reserved.</p>
+        <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="skills.html">Skills</a>
+            <a href="project.html">Projects</a>
+            <a href="reference.html">Reference</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </footer>
+    <script>
+        const themeToggle = document.getElementById("theme-toggle");
+
+        themeToggle.addEventListener("click", () => 
+            {
+                document.body.classList.toggle("dark-mode");
+                if(document.body.classList.contains("dark-mode"))
+                    {
+                        themeToggle.innerHTML ='<i class="fa-solid fa-sun"></i>';
+                    }
+                else
+                    {
+                        themeToggle.innerHTML ='<i class="fa-solid fa-moon"></i>';
+                    }
+                }
+            );
+    </script>
+</body>
+</html>
+
+
+

@@ -1,0 +1,107 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yash Rakesh Dabhade | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+    <header class="container">
+        <a href="index.html" class="logo">My Portfolio</a>
+                <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="reference.html">Reference</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <button id="theme-toggle" class="theme-btn">
+            <i class="fa-solid fa-moon"></i>
+            </button>
+    </header>
+    <section id="about" class="about-page">
+        <h2 class="section-title">About Me</h2>
+
+        <div class="about-layout">
+            <div class="about-content">
+                <p>
+                    I am Yash R Dabhade, a passionate and hardworking student with a strong interest in programming,
+                    web development, and problem solving. I enjoy turning small ideas into working projects and learning
+                    something new from every challenge.
+                </p>
+
+                <h3 class="about-line">
+                    I believe consistency, curiosity, and a positive mindset can turn simple efforts into strong results.
+                </h3>
+
+                <p>
+                    I know Java, Python, MySQL, OOP, C, C++, HTML, CSS, Git, GitHub, and VS Code. I am a work-oriented
+                    person who likes to stay focused, complete tasks with dedication, and improve step by step through
+                    regular practice.
+                </p>
+
+                <div class="qualities">
+                    <div class="quality-box">
+                        <h3>Strengths</h3>
+                        <ul>
+                            <li>Hardworking and consistent</li>
+                            <li>Positive attitude toward learning</li>
+                            <li>Good problem-solving mindset</li>
+                            <li>Focused and work-oriented</li>
+                            <li>Always ready to improve</li>
+                        </ul>
+                    </div>
+
+                    <div class="quality-box">
+                        <h3>Weaknesses</h3>
+                        <ul>
+                            <li>I sometimes spend extra time making my work better</li>
+                            <li>I am still improving my communication and presentation skills</li>
+                            <li>I am learning to manage time more effectively during projects</li>
+                        </ul>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; // © 2026 SPCL Infotech Pvt Ltd. All Rights Reserved.</p>
+
+                <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="skills.html">Skills</a>
+            <a href="project.html">Projects</a>
+            <a href="reference.html">Reference</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </footer>
+    <script>
+        const themeToggle = document.getElementById("theme-toggle");
+
+        themeToggle.addEventListener("click", () => 
+            {
+                document.body.classList.toggle("dark-mode");
+                if(document.body.classList.contains("dark-mode"))
+                    {
+                        themeToggle.innerHTML ='<i class="fa-solid fa-sun"></i>';
+                    }
+                else
+                    {
+                        themeToggle.innerHTML ='<i class="fa-solid fa-moon"></i>';
+                    }
+                }
+            );
+    </script>
+</body>
+</html>
+
+
+
+

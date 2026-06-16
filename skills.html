@@ -1,0 +1,114 @@
+﻿<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Yash Rakesh Dabhade | Portfolio</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.1/css/all.min.css">
+</head>
+<body>
+    <header class="container">
+        <a href="index.html" class="logo">My Portfolio</a>
+                <nav>
+            <ul class="nav-links">
+                <li><a href="index.html">Home</a></li>
+                <li><a href="about.html">About</a></li>
+                <li><a href="skills.html">Skills</a></li>
+                <li><a href="project.html">Projects</a></li>
+                <li><a href="reference.html">Reference</a></li>
+                <li><a href="contact.html">Contact</a></li>
+            </ul>
+        </nav>
+        <button id="theme-toggle" class="theme-btn">
+            <i class="fa-solid fa-moon"></i>
+            </button>
+    </header>
+    <section id="skills" class="skills">
+        <h2 class="section-title">Skills</h2>
+
+        <div class="skill-container">
+            <div class="skill-card">
+                <i class="fa-brands fa-java"></i>
+                <h3>Java</h3>
+                <p>Core Java, object-oriented programming, classes, inheritance, and basic problem solving.</p>
+            </div>
+
+            <div class="skill-card">
+                <i class="fa-brands fa-python"></i>
+                <h3>Python</h3>
+                <p>Python programming fundamentals, logic building, functions, loops, and basic scripting.</p>
+            </div>
+
+            <div class="skill-card">
+                <i class="fa-solid fa-database"></i>
+                <h3>MySQL</h3>
+                <p>Database basics, SQL queries, tables, relationships, and simple data management.</p>
+            </div>
+
+            <div class="skill-card">
+                <i class="fa-solid fa-code"></i>
+                <h3>C / C++</h3>
+                <p>Programming fundamentals, arrays, functions, pointers, OOP concepts, and logic building.</p>
+            </div>
+
+            <div class="skill-card">
+                <i class="fa-brands fa-html5"></i>
+                <h3>HTML & CSS</h3>
+                <p>Semantic HTML, styling, layouts, responsive design basics, and portfolio website development.</p>
+            </div>
+
+            <div class="skill-card">
+                <i class="fa-brands fa-git-alt"></i>
+                <h3>Git & GitHub</h3>
+                <p>Version control, repositories, commits, GitHub profile management, and project hosting.</p>
+            </div>
+
+            <div class="skill-card">
+                <i class="fa-solid fa-cube"></i>
+                <h3>OOP</h3>
+                <p>Classes, objects, inheritance, polymorphism, encapsulation, and abstraction.</p>
+            </div>
+
+            <div class="skill-card">
+                <i class="fa-solid fa-laptop-code"></i>
+                <h3>Tools</h3>
+                <p>VS Code, coding environment setup, debugging basics, and project organization.</p>
+            </div>
+        </div>
+    </section>
+
+    <footer class="footer">
+        <p>&copy; // © 2026 SPCL Infotech Pvt Ltd. All Rights Reserved.</p>
+
+                <div class="footer-links">
+            <a href="index.html">Home</a>
+            <a href="about.html">About</a>
+            <a href="skills.html">Skills</a>
+            <a href="project.html">Projects</a>
+            <a href="reference.html">Reference</a>
+            <a href="contact.html">Contact</a>
+        </div>
+    </footer>
+    <script>
+        const themeToggle = document.getElementById("theme-toggle");
+
+        themeToggle.addEventListener("click", () => 
+            {
+                document.body.classList.toggle("dark-mode");
+                if(document.body.classList.contains("dark-mode"))
+                    {
+                        themeToggle.innerHTML ='<i class="fa-solid fa-sun"></i>';
+                    }
+                else
+                    {
+                        themeToggle.innerHTML ='<i class="fa-solid fa-moon"></i>';
+                    }
+                }
+            );
+    </script>
+</body>
+</html>
+
+
+
