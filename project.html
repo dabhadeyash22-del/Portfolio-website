@@ -37,7 +37,7 @@
                     <span>Logic Building</span>
                 </div>
                 <div class="project-links">
-                    <a href="https://dabhadeyash22-del.github.io/Guess-Number-Game/"target="_blank" rel="noopener noreferrer" class="btn">Tap to Play</Code></a>
+                    <a href="https://dabhadeyash22-del.github.io/Guess-Number-Game/"target="_blank" rel="noopener noreferrer" class="btn">Tap to Play></a>
                 </div>
             </div>
 
@@ -65,13 +65,34 @@
                 </div>
             </div>
 
+            <div class="project-card featured">
+    <i class="fa-solid fa-utensils"></i>
+    <h3>Smart Restaurant Management System</h3>
+    <p>
+        Complete restaurant automation platform featuring QR ordering,
+        kitchen management, queue handling, billing, waiter assistance,
+        table management, analytics, and delivery workflow.
+    </p>
+
+    <div class="project-tech">
+        <span>HTML</span>
+        <span>CSS</span>
+        <span>JavaScript</span>
+        <span>Database</span>
+    </div>
+
+    <span class="project-status">In Development</span>
+</div>
+
             <div class="project-card">
                 <i class="fa-solid fa-code"></i>
                 <h3>Future Project</h3>
                 <p>More projects will be added here as I continue learning and uploading my work.</p>
-                <div class="project-tech">
-                    <span>Coming Soon</span>
-                </div>
+               <div class="project-links">
+    <a href="YOUR_GITHUB_LINK" target="_blank" class="btn">
+        <i class="fa-brands fa-github"></i> View Code
+    </a>
+</div>
                 <span class="project-status">Planned</span>
             </div>
         </div>
@@ -83,7 +104,7 @@
                 <div class="footer-links">
             <a href="index.html">Home</a>
             <a href="about.html">About</a>
-            <a href="experience.html">Skills</a>
+            <a href="skills.html">Skills</a>
             <a href="project.html">Projects</a>
             <a href="reference.html">Reference</a>
             <a href="contact.html">Contact</a>
@@ -91,22 +112,25 @@
     </footer>
     
     <script>
-        const themeToggle = document.getElementById("theme-toggle");
+const themeToggle = document.getElementById("theme-toggle");
 
-        themeToggle.addEventListener("click", () => 
-            {
-                document.body.classList.toggle("dark-mode");
-                if(document.body.classList.contains("dark-mode"))
-                    {
-                        themeToggle.innerHTML ='<i class="fa-solid fa-sun"></i>';
-                    }
-                else
-                    {
-                        themeToggle.innerHTML ='<i class="fa-solid fa-moon"></i>';
-                    }
-                }
-            );
-    </script>
+if(localStorage.getItem("theme") === "dark"){
+    document.body.classList.add("dark-mode");
+    themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+}
+
+themeToggle.addEventListener("click", () => {
+    document.body.classList.toggle("dark-mode");
+
+    if(document.body.classList.contains("dark-mode")){
+        themeToggle.innerHTML = '<i class="fa-solid fa-sun"></i>';
+        localStorage.setItem("theme", "dark");
+    } else {
+        themeToggle.innerHTML = '<i class="fa-solid fa-moon"></i>';
+        localStorage.setItem("theme", "light");
+    }
+});
+</script>
 </body>
 </html>
 
