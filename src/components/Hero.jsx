@@ -2,43 +2,42 @@ import React, { useState, useEffect } from 'react'
 
 export default function Hero() {
   const [text, setText] = useState('')
-  const [roleIdx, setRoleIdx] = useState(0)
-  const [charIdx, setCharIdx] = useState(0)
-  const [deleting, setDeleting] = useState(false)
-
   const roles = ["Programmer", "Web Developer", "AI Agent Architect", "Software Engineer"]
 
   useEffect(() => {
+    let roleIdx = 0
+    let charIdx = 0
+    let deleting = false
     let timer
-    const current = roles[roleIdx]
 
-    const handleType = () => {
-      if (!deleting) {
-        setText(current.substring(0, charIdx + 1))
-        setCharIdx(prev => prev + 1)
-        
-        if (charIdx + 1 === current.length) {
-          timer = setTimeout(() => setDeleting(true), 2000)
-        } else {
-          timer = setTimeout(handleType, 60)
-        }
-      } else {
+    const typeLoop = () => {
+      const current = roles[roleIdx]
+      
+      if (deleting) {
         setText(current.substring(0, charIdx - 1))
-        setCharIdx(prev => prev - 1)
-
-        if (charIdx - 1 === 0) {
-          setDeleting(false)
-          setRoleIdx(prev => (prev + 1) % roles.length)
-          timer = setTimeout(handleType, 400)
-        } else {
-          timer = setTimeout(handleType, 30)
-        }
+        charIdx--
+      } else {
+        setText(current.substring(0, charIdx + 1))
+        charIdx++
       }
+
+      let typeSpeed = deleting ? 30 : 60
+
+      if (!deleting && charIdx === current.length) {
+        typeSpeed = 2000
+        deleting = true
+      } else if (deleting && charIdx === 0) {
+        deleting = false
+        roleIdx = (roleIdx + 1) % roles.length
+        typeSpeed = 400
+      }
+
+      timer = setTimeout(typeLoop, typeSpeed)
     }
 
-    timer = setTimeout(handleType, deleting ? 30 : 60)
+    timer = setTimeout(typeLoop, 800)
     return () => clearTimeout(timer)
-  }, [charIdx, deleting, roleIdx])
+  }, [])
 
   return (
     <section id="home" className="hero-section">
