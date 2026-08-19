@@ -1,0 +1,239 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Library Management System</title>
+
+    <!-- Google Font -->
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+
+    <!-- Icons -->
+    <link rel="stylesheet"
+    href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.2/css/all.min.css">
+
+    <link rel="stylesheet" href="css/style.css">
+</head>
+
+<body>
+
+<div class="container">
+
+    <!-- Sidebar -->
+
+    <aside class="sidebar">
+
+        <div class="logo">
+            <i class="fa-solid fa-book-open"></i>
+            <h2>LibraryMS</h2>
+        </div>
+
+        <ul>
+
+            <li class="active">
+                <i class="fa-solid fa-house"></i>
+                Dashboard
+            </li>
+
+            <li>
+                <i class="fa-solid fa-book"></i>
+                Books
+            </li>
+
+            <li>
+                <i class="fa-solid fa-users"></i>
+                Members
+            </li>
+
+            <li>
+                <i class="fa-solid fa-book-open-reader"></i>
+                Issue Book
+            </li>
+
+            <li>
+                <i class="fa-solid fa-arrow-rotate-left"></i>
+                Return Book
+            </li>
+
+            <li>
+                <i class="fa-solid fa-chart-column"></i>
+                Reports
+            </li>
+
+            <li>
+                <i class="fa-solid fa-gear"></i>
+                Settings
+            </li>
+
+        </ul>
+
+    </aside>
+
+    <!-- Main -->
+
+    <main class="main">
+
+        <!-- Navbar -->
+
+        <nav>
+
+            <h1>Dashboard</h1>
+
+            <div class="nav-right">
+
+                <input
+                type="text"
+                placeholder="Search Books...">
+
+                <button id="darkBtn">
+                    🌙
+                </button>
+
+                <img src="https://i.pravatar.cc/40" alt="">
+
+            </div>
+
+        </nav>
+
+        <!-- Cards -->
+
+        <section class="cards">
+
+            <div class="card">
+
+                <i class="fa-solid fa-book"></i>
+
+                <h3>Total Books</h3>
+
+                <h2 id="books">120</h2>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-users"></i>
+
+                <h3>Members</h3>
+
+                <h2 id="members">45</h2>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-book-open-reader"></i>
+
+                <h3>Issued</h3>
+
+                <h2 id="issued">28</h2>
+
+            </div>
+
+            <div class="card">
+
+                <i class="fa-solid fa-circle-check"></i>
+
+                <h3>Available</h3>
+
+                <h2 id="available">92</h2>
+
+            </div>
+
+        </section>
+
+        <!-- Recent Activity -->
+
+        <section class="activity">
+
+            <h2>Recent Activity</h2>
+
+            <table>
+
+                <thead>
+
+                <tr>
+
+                    <th>Member</th>
+
+                    <th>Book</th>
+
+                    <th>Status</th>
+
+                    <th>Date</th>
+
+                </tr>
+
+                </thead>
+
+                <tbody id="activityTable">
+
+                    <tr>
+
+                        <td>Rahul</td>
+
+                        <td>Java Programming</td>
+
+                        <td class="green">Issued</td>
+
+                        <td>12 July</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Sneha</td>
+
+                        <td>Python Basics</td>
+
+                        <td class="blue">Returned</td>
+
+                        <td>11 July</td>
+
+                    </tr>
+
+                    <tr>
+
+                        <td>Aman</td>
+
+                        <td>Database System</td>
+
+                        <td class="green">Issued</td>
+
+                        <td>10 July</td>
+
+                    </tr>
+
+                </tbody>
+
+            </table>
+
+        </section>
+
+        <!-- Quick Actions -->
+
+        <section class="actions">
+
+            <h2>Quick Actions</h2>
+
+            <div class="buttons">
+
+                <button>Add Book</button>
+
+                <button>Add Member</button>
+
+                <button>Issue Book</button>
+
+                <button>Return Book</button>
+
+            </div>
+
+        </section>
+
+    </main>
+
+</div>
+
+<script src="js/script.js"></script>
+
+</body>
+</html>

@@ -1,0 +1,4081 @@
+<!DOCTYPE html>
+<html>
+
+<html>
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Print Zone — Think It, We Print It</title>
+
+  <style>
+    /* ==========================================================================
+   1. CORE VARIABLES & THEMES
+   ========================================================================== */
+:root {
+  --bg: #0a0a0b;
+  --bg-2: #111114;
+  --bg-3: #1a1a1f;
+  --text: #f5f5f7;
+  --text-dim: #a0a0a8;
+  --text-mute: #6b6b74;
+  --accent: #ff3d2e;
+  --accent-2: #ffb800;
+  --accent-3: #00d4ff;
+  --border: rgba(255, 255, 255, 0.08);
+  --card: rgba(255, 255, 255, 0.03);
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.5);
+  --radius: 14px;
+}
+
+[data-theme="light"] {
+  --bg: #fafafa;
+  --bg-2: #ffffff;
+  --bg-3: #f0f0f3;
+  --text: #0a0a0b;
+  --text-dim: #4a4a52;
+  --text-mute: #8a8a92;
+  --border: rgba(0, 0, 0, 0.08);
+  --card: rgba(0, 0, 0, 0.02);
+  --shadow: 0 20px 60px rgba(0, 0, 0, 0.08);
+}
+
+/* ==========================================================================
+   2. BASE RESETS & GLOBAL STYLES
+   ========================================================================== */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+html {
+  scroll-behavior: smooth;
+}
+
+body {
+  font-family: "Inter", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  line-height: 1.6;
+  overflow-x: hidden;
+  transition: background 0.3s, color 0.3s;
+}
+
+img {
+  max-width: 100%;
+  display: block;
+}
+
+a {
+  color: inherit;
+  text-decoration: none;
+}
+
+.container {
+  max-width: 1320px;
+  margin: 0 auto;
+  padding: 0 24px;
+}
+
+/* ==========================================================================
+   3. LAYOUT COMPONENTS (NAV, SCROLLBAR, BUTTONS)
+   ========================================================================== */
+/* ----- Progress Bar ----- */
+.progress-bar {
+  position: fixed;
+  top: 0;
+  left: 0;
+  height: 3px;
+  background: linear-gradient(90deg, var(--accent), var(--accent-2));
+  z-index: 9999;
+  width: 0;
+  transition: width 0.1s;
+}
+
+/* ----- Navigation Header ----- */
+.nav {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  padding: 18px 0;
+  transition: all 0.3s;
+  background: rgba(10, 10, 11, 0.7);
+  backdrop-filter: blur(20px);
+  border-bottom: 1px solid transparent;
+}
+
+.nav.scrolled {
+  padding: 12px 0;
+  border-bottom-color: var(--border);
+}
+
+.nav-inner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 32px;
+}
+
+.logo {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 28px;
+  letter-spacing: 2px;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.logo-mark {
+  width: 36px;
+  height: 36px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  border-radius: 8px;
+  display: grid;
+  place-items: center;
+  font-size: 20px;
+  color: #fff;
+  font-weight: 800;
+  font-family: "Space Grotesk";
+}
+
+.nav-menu {
+  display: flex;
+  gap: 32px;
+  list-style: none;
+  align-items: center;
+}
+
+.nav-menu a {
+  font-size: 14px;
+  font-weight: 500;
+  color: var(--text-dim);
+  transition: color 0.2s;
+  position: relative;
+}
+
+.nav-menu a:hover {
+  color: var(--text);
+}
+
+.nav-menu a::after {
+  content: "";
+  position: absolute;
+  bottom: -6px;
+  left: 0;
+  width: 0;
+  height: 2px;
+  background: var(--accent);
+  transition: width 0.3s;
+}
+
+.nav-menu a:hover::after {
+  width: 100%;
+}
+
+.nav-actions {
+  display: flex;
+  gap: 12px;
+  align-items: center;
+}
+
+/* ----- Buttons & UI Triggers ----- */
+.icon-btn {
+  width: 40px;
+  height: 40px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  background: var(--card);
+  color: var(--text);
+  cursor: pointer;
+  display: grid;
+  place-items: center;
+  transition: all 0.2s;
+}
+
+.icon-btn:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn {
+  padding: 12px 22px;
+  border-radius: 10px;
+  font-weight: 600;
+  font-size: 14px;
+  cursor: pointer;
+  border: none;
+  transition: all 0.25s;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  font-family: inherit;
+}
+
+.btn-primary {
+  background: var(--accent);
+  color: #fff;
+}
+
+.btn-primary:hover {
+  background: #ff5544;
+  transform: translateY(-2px);
+  box-shadow: 0 10px 30px rgba(255, 61, 46, 0.4);
+}
+
+.btn-ghost {
+  background: transparent;
+  color: var(--text);
+  border: 1px solid var(--border);
+}
+
+.btn-ghost:hover {
+  border-color: var(--accent);
+  color: var(--accent);
+}
+
+.btn-wa {
+  background: #25d366;
+  color: #fff;
+}
+
+.btn-wa:hover {
+  background: #1fb855;
+  transform: translateY(-2px);
+}
+
+.burger {
+  display: none;
+  flex-direction: column;
+  gap: 5px;
+  cursor: pointer;
+  background: none;
+  border: none;
+  padding: 8px;
+}
+
+.burger span {
+  width: 24px;
+  height: 2px;
+  background: var(--text);
+  transition: 0.3s;
+}
+
+/* ==========================================================================
+   4. HERO SECTION
+   ========================================================================== */
+.hero {
+  min-height: 100vh;
+  position: relative;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+  padding: 120px 0 60px;
+}
+
+.hero-video {
+  position: absolute;
+  inset: 0;
+  z-index: 0;
+  overflow: hidden;
+}
+
+.hero-video::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(
+    135deg,
+    rgba(10, 10, 11, 0.92),
+    rgba(10, 10, 11, 0.75) 50%,
+    rgba(10, 10, 11, 0.95)
+  );
+}
+
+.hero-video video {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 2;
+  max-width: 900px;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  gap: 10px;
+  padding: 8px 16px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: 100px;
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-bottom: 28px;
+  backdrop-filter: blur(10px);
+}
+
+.hero-badge .dot {
+  width: 8px;
+  height: 8px;
+  background: #22c55e;
+  border-radius: 50%;
+  animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.4;
+  }
+}
+
+.hero h1 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(56px, 10vw, 140px);
+  line-height: 0.95;
+  letter-spacing: -1px;
+  margin-bottom: 24px;
+}
+
+.hero h1 span {
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  -webkit-background-clip: text;
+  background-clip: text;
+  color: transparent;
+}
+
+.hero-sub {
+  font-size: clamp(15px, 1.5vw, 18px);
+  color: var(--text-dim);
+  max-width: 640px;
+  margin-bottom: 40px;
+}
+
+.hero-ctas {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 14px;
+  margin-bottom: 60px;
+}
+
+.hero-stats {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+  gap: 24px;
+  padding-top: 40px;
+  border-top: 1px solid var(--border);
+}
+
+.hero-stat .num {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 42px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.hero-stat .lbl {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin-top: 4px;
+}
+
+.scroll-ind {
+  position: absolute;
+  bottom: 30px;
+  left: 50%;
+  transform: translateX(-50%);
+  color: var(--text-mute);
+  font-size: 12px;
+  letter-spacing: 2px;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 10px;
+  z-index: 2;
+}
+
+.scroll-ind .line {
+  width: 1px;
+  height: 40px;
+  background: linear-gradient(var(--text-mute), transparent);
+  animation: scrollLine 2s infinite;
+}
+
+@keyframes scrollLine {
+  0% {
+    transform: scaleY(0);
+    transform-origin: top;
+  }
+  50% {
+    transform: scaleY(1);
+    transform-origin: top;
+  }
+  51% {
+    transform-origin: bottom;
+  }
+  100% {
+    transform: scaleY(0);
+    transform-origin: bottom;
+  }
+}
+
+/* ==========================================================================
+   5. REUSABLE SECTION HEADERS
+   ========================================================================== */
+section {
+  padding: 100px 0;
+  position: relative;
+}
+
+.section-head {
+  text-align: center;
+  max-width: 720px;
+  margin: 0 auto 60px;
+}
+
+.eyebrow {
+  display: inline-block;
+  font-size: 12px;
+  letter-spacing: 3px;
+  color: var(--accent);
+  font-weight: 600;
+  text-transform: uppercase;
+  margin-bottom: 14px;
+}
+
+.section-head h2 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: clamp(40px, 5vw, 68px);
+  line-height: 1;
+  letter-spacing: -0.5px;
+  margin-bottom: 18px;
+}
+
+.section-head p {
+  color: var(--text-dim);
+  font-size: 17px;
+}
+
+/* ==========================================================================
+   6. INDIVIDUAL SECTIONS CONTENT
+   ========================================================================== */
+/* ----- Services Module ----- */
+.services-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  gap: 20px;
+}
+
+.service-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  transition: all 0.35s;
+  position: relative;
+  overflow: hidden;
+  cursor: pointer;
+}
+
+.service-card::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, var(--accent), transparent);
+  opacity: 0;
+  transition: opacity 0.35s;
+  z-index: 0;
+}
+
+.service-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+}
+
+.service-card:hover::before {
+  opacity: 0.08;
+}
+
+.service-card > * {
+  position: relative;
+  z-index: 1;
+}
+
+.service-icon {
+  width: 56px;
+  height: 56px;
+  border-radius: 14px;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: grid;
+  place-items: center;
+  margin-bottom: 20px;
+  font-size: 26px;
+}
+
+.service-card h3 {
+  font-family: "Space Grotesk", sans-serif;
+  font-size: 22px;
+  margin-bottom: 10px;
+  font-weight: 700;
+}
+
+.service-card p {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-bottom: 16px;
+}
+
+.service-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.service-tags span {
+  font-size: 11px;
+  padding: 4px 10px;
+  background: var(--bg-3);
+  border-radius: 100px;
+  color: var(--text-dim);
+}
+
+/* ----- Portfolio Grid ----- */
+.portfolio {
+  background: var(--bg-2);
+}
+
+.filter-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 10px;
+  justify-content: center;
+  margin-bottom: 40px;
+}
+
+.filter-btn {
+  padding: 8px 18px;
+  border-radius: 100px;
+  border: 1px solid var(--border);
+  background: transparent;
+  color: var(--text-dim);
+  cursor: pointer;
+  font-size: 13px;
+  font-family: inherit;
+  transition: all 0.2s;
+}
+
+.filter-btn.active,
+.filter-btn:hover {
+  background: var(--accent);
+  color: #fff;
+  border-color: var(--accent);
+}
+
+.portfolio-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 16px;
+}
+
+.port-item {
+  position: relative;
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4/5;
+  cursor: pointer;
+  background: var(--bg-3);
+}
+
+.port-item img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.6s;
+}
+
+.port-item:hover img {
+  transform: scale(1.08);
+}
+
+.port-overlay {
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(to top, rgba(0, 0, 0, 0.9), transparent 60%);
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+  padding: 20px;
+  opacity: 0;
+  transition: opacity 0.3s;
+}
+
+.port-item:hover .port-overlay {
+  opacity: 1;
+}
+
+.port-overlay .cat {
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+}
+
+.port-overlay h4 {
+  font-size: 18px;
+  margin-top: 4px;
+  color: #fff;
+}
+
+/* ----- Before / After Image Slider ----- */
+.ba-wrap {
+  max-width: 1000px;
+  margin: 0 auto;
+  border-radius: var(--radius);
+  overflow: hidden;
+  position: relative;
+  aspect-ratio: 16/10;
+  box-shadow: var(--shadow);
+}
+
+.ba-img {
+  position: absolute;
+  inset: 0;
+  background-size: cover;
+  background-position: center;
+}
+
+.ba-before {
+  filter: grayscale(0.6) brightness(0.7);
+}
+
+.ba-after {
+  clip-path: inset(0 0 0 50%);
+}
+
+.ba-slider {
+  position: absolute;
+  top: 0;
+  bottom: 0;
+  left: 50%;
+  width: 4px;
+  background: #fff;
+  cursor: ew-resize;
+  z-index: 3;
+  transform: translateX(-50%);
+}
+
+.ba-handle {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  width: 50px;
+  height: 50px;
+  border-radius: 50%;
+  background: #fff;
+  display: grid;
+  place-items: center;
+  color: #000;
+  font-weight: 700;
+  box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+}
+
+.ba-label {
+  position: absolute;
+  top: 20px;
+  padding: 6px 14px;
+  background: rgba(0, 0, 0, 0.7);
+  color: #fff;
+  border-radius: 100px;
+  font-size: 12px;
+  letter-spacing: 2px;
+  z-index: 2;
+}
+
+.ba-label.before {
+  left: 20px;
+}
+.ba-label.after {
+  right: 20px;
+}
+
+/* ----- Machinery Grid ----- */
+.machines-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 16px;
+}
+
+.machine-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 24px;
+  transition: all 0.3s;
+  position: relative;
+}
+
+.machine-card:hover {
+  border-color: var(--accent-3);
+  transform: translateY(-4px);
+}
+
+.machine-icon {
+  font-size: 36px;
+  margin-bottom: 14px;
+}
+
+.machine-card h4 {
+  font-size: 16px;
+  margin-bottom: 6px;
+  font-weight: 600;
+}
+
+.machine-card .cap {
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 12px;
+}
+
+.machine-badge {
+  display: inline-block;
+  padding: 3px 10px;
+  background: var(--accent-3);
+  color: #000;
+  border-radius: 100px;
+  font-size: 10px;
+  font-weight: 700;
+  letter-spacing: 1px;
+}
+
+/* ----- Interactive Pricing Calculator ----- */
+.calc {
+  background: linear-gradient(135deg, var(--bg-2), var(--bg-3));
+  border: 1px solid var(--border);
+  border-radius: 20px;
+  padding: 40px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.calc-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+  gap: 18px;
+  margin-bottom: 28px;
+}
+
+.field label {
+  display: block;
+  font-size: 12px;
+  color: var(--text-dim);
+  margin-bottom: 6px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.field input,
+.field select {
+  width: 100%;
+  padding: 12px 14px;
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 10px;
+  color: var(--text);
+  font-family: inherit;
+  font-size: 14px;
+  transition: border 0.2s;
+}
+
+.field input:focus,
+.field select:focus {
+  outline: none;
+  border-color: var(--accent);
+}
+
+.calc-result {
+  background: var(--bg);
+  border: 1px solid var(--border);
+  border-radius: 14px;
+  padding: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 16px;
+}
+
+.calc-result .price {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 48px;
+  color: var(--accent);
+  line-height: 1;
+}
+
+.calc-result .price small {
+  font-size: 14px;
+  color: var(--text-dim);
+  font-family: "Inter", sans-serif;
+  display: block;
+  margin-top: 4px;
+}
+
+/* ----- Urgent (Tatkal) Modules ----- */
+.tatkal {
+  background: linear-gradient(
+    135deg,
+    rgba(255, 61, 46, 0.08),
+    rgba(255, 184, 0, 0.05)
+  );
+  border-top: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+}
+
+.tatkal-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+  gap: 20px;
+}
+
+.tatkal-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+  text-align: center;
+  position: relative;
+  overflow: hidden;
+}
+
+.tatkal-card.featured {
+  border-color: var(--accent);
+  background: linear-gradient(135deg, rgba(255, 61, 46, 0.1), transparent);
+}
+
+.tatkal-time {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 56px;
+  color: var(--accent);
+  line-height: 1;
+  margin-bottom: 8px;
+}
+
+.tatkal-card h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+}
+
+.tatkal-card ul {
+  list-style: none;
+  text-align: left;
+  margin-top: 16px;
+}
+
+.tatkal-card li {
+  padding: 6px 0;
+  color: var(--text-dim);
+  font-size: 14px;
+  display: flex;
+  gap: 8px;
+}
+
+.tatkal-card li::before {
+  content: "✓";
+  color: var(--accent);
+  font-weight: 700;
+}
+
+/* ----- Targeted Sectors Grid ----- */
+.ind-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+  gap: 12px;
+}
+
+.ind-card {
+  padding: 24px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  text-align: center;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.ind-card:hover {
+  border-color: var(--accent);
+  transform: translateY(-4px);
+  background: var(--bg-3);
+}
+
+.ind-card .ic {
+  font-size: 32px;
+  margin-bottom: 10px;
+}
+
+.ind-card h5 {
+  font-size: 14px;
+  font-weight: 600;
+}
+
+/* ----- Case Study Feature Component ----- */
+.case {
+  background: var(--bg-2);
+}
+
+.case-wrap {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 60px;
+  align-items: center;
+}
+
+.case-img {
+  border-radius: var(--radius);
+  overflow: hidden;
+  aspect-ratio: 4/3;
+  box-shadow: var(--shadow);
+}
+
+.case-img img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+}
+
+.case h3 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 42px;
+  margin-bottom: 20px;
+  line-height: 1;
+}
+
+.case-steps {
+  margin-top: 24px;
+}
+
+.case-step {
+  display: flex;
+  gap: 16px;
+  padding: 14px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.case-step:last-child {
+  border-bottom: none;
+}
+
+.case-step .n {
+  width: 36px;
+  height: 36px;
+  border-radius: 10px;
+  background: var(--accent);
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  flex-shrink: 0;
+}
+
+.case-step h5 {
+  font-size: 15px;
+  margin-bottom: 2px;
+}
+
+.case-step p {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* ----- Operational Team Cards ----- */
+.team-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 20px;
+}
+
+.team-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.3s;
+}
+
+.team-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+}
+
+.team-img {
+  aspect-ratio: 1;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: grid;
+  place-items: center;
+  font-size: 60px;
+}
+
+.team-info {
+  padding: 20px;
+  text-align: center;
+}
+
+.team-info h4 {
+  font-size: 16px;
+  margin-bottom: 4px;
+}
+
+.team-info p {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* ----- Social Proof & Testimonials ----- */
+.testi {
+  background: var(--bg-2);
+}
+
+.testi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 20px;
+}
+
+.testi-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 28px;
+  position: relative;
+}
+
+.testi-card::before {
+  content: '"';
+  position: absolute;
+  top: 10px;
+  right: 20px;
+  font-family: "Bebas Neue";
+  font-size: 80px;
+  color: var(--accent);
+  opacity: 0.3;
+  line-height: 1;
+}
+
+.testi-stars {
+  color: var(--accent-2);
+  margin-bottom: 14px;
+}
+
+.testi-text {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin-bottom: 20px;
+  font-style: italic;
+}
+
+.testi-author {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.testi-avatar {
+  width: 44px;
+  height: 44px;
+  border-radius: 50%;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  display: grid;
+  place-items: center;
+  font-weight: 700;
+  color: #fff;
+}
+
+.testi-author h5 {
+  font-size: 14px;
+}
+
+.testi-author p {
+  font-size: 12px;
+  color: var(--text-mute);
+}
+
+/* ----- Editorial Blog Section ----- */
+.blog-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+  gap: 24px;
+}
+
+.blog-card {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  overflow: hidden;
+  transition: all 0.3s;
+  cursor: pointer;
+}
+
+.blog-card:hover {
+  transform: translateY(-6px);
+  border-color: var(--accent);
+}
+
+.blog-img {
+  aspect-ratio: 16/10;
+  background: linear-gradient(135deg, var(--accent), var(--accent-2));
+  position: relative;
+  overflow: hidden;
+}
+
+.blog-img::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(135deg, rgba(0, 0, 0, 0.3), transparent);
+}
+
+.blog-body {
+  padding: 24px;
+}
+
+.blog-meta {
+  font-size: 11px;
+  color: var(--accent);
+  letter-spacing: 2px;
+  text-transform: uppercase;
+  margin-bottom: 8px;
+}
+
+.blog-card h4 {
+  font-size: 18px;
+  margin-bottom: 10px;
+  line-height: 1.3;
+}
+
+.blog-card p {
+  font-size: 13px;
+  color: var(--text-dim);
+}
+
+/* ----- Dynamic Contact & Map Modules ----- */
+.contact {
+  background: var(--bg-2);
+}
+
+.contact-grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 40px;
+}
+
+.contact-info h3 {
+  font-family: "Bebas Neue", sans-serif;
+  font-size: 42px;
+  margin-bottom: 16px;
+  line-height: 1;
+}
+
+.contact-info p {
+  color: var(--text-dim);
+  margin-bottom: 28px;
+}
+
+.contact-item {
+  display: flex;
+  gap: 16px;
+  padding: 16px 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.contact-item:last-child {
+  border-bottom: none;
+}
+
+.contact-ic {
+  width: 44px;
+  height: 44px;
+  border-radius: 12px;
+  background: var(--card);
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  flex-shrink: 0;
+  font-size: 18px;
+}
+
+.contact-item h5 {
+  font-size: 14px;
+  margin-bottom: 2px;
+}
+
+.contact-item p {
+  font-size: 13px;
+  color: var(--text-dim);
+  margin: 0;
+}
+
+.contact-form {
+  background: var(--card);
+  border: 1px solid var(--border);
+  border-radius: var(--radius);
+  padding: 32px;
+}
+
+.contact-form textarea {
+  resize: vertical;
+  min-height: 100px;
+}
+
+/* ==========================================================================
+   7. FOOTER MODULE
+   ========================================================================== */
+.footer {
+  background: var(--bg-2);
+  padding: 60px 0 30px;
+  border-top: 1px solid var(--border);
+}
+
+.foot-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 40px;
+  margin-bottom: 40px;
+}
+
+.foot-about p {
+  color: var(--text-dim);
+  font-size: 14px;
+  margin: 16px 0;
+  max-width: 320px;
+}
+
+.foot-col h5 {
+  font-size: 14px;
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+}
+
+.foot-col ul {
+  list-style: none;
+}
+
+.foot-col li {
+  margin-bottom: 10px;
+}
+
+.foot-col a {
+  color: var(--text-dim);
+  font-size: 14px;
+  transition: color 0.2s;
+}
+
+.foot-col a:hover {
+  color: var(--accent);
+}
+
+.foot-bottom {
+  padding-top: 24px;
+  border-top: 1px solid var(--border);
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
+  gap: 16px;
+  color: var(--text-mute);
+  font-size: 13px;
+}
+
+.socials {
+  display: flex;
+  gap: 10px;
+  margin-top: 16px;
+}
+
+.socials a {
+  width: 38px;
+  height: 38px;
+  border-radius: 10px;
+  border: 1px solid var(--border);
+  display: grid;
+  place-items: center;
+  transition: all 0.2s;
+}
+
+.socials a:hover {
+  background: var(--accent);
+  border-color: var(--accent);
+  color: #fff;
+}
+
+/* ==========================================================================
+   8. FIXED POSITION FLOATING NAVIGATION UTILITIES
+   ========================================================================== */
+.float-wa {
+  position: fixed;
+  bottom: 24px;
+  right: 24px;
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background: #25d366;
+  color: #fff;
+  display: grid;
+  place-items: center;
+  font-size: 28px;
+  box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+  z-index: 999;
+  transition: transform 0.2s;
+  animation: waPulse 2s infinite;
+}
+
+.float-wa:hover {
+  transform: scale(1.1);
+}
+
+@keyframes waPulse {
+  0%,
+  100% {
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.4);
+  }
+  50% {
+    box-shadow: 0 10px 30px rgba(37, 211, 102, 0.7),
+      0 0 0 12px rgba(37, 211, 102, 0);
+  }
+}
+
+.float-quote {
+  position: fixed;
+  bottom: 24px;
+  left: 24px;
+  padding: 14px 22px;
+  border-radius: 100px;
+  background: var(--accent);
+  color: #fff;
+  font-weight: 600;
+  font-size: 14px;
+  z-index: 999;
+  box-shadow: 0 10px 30px rgba(255, 61, 46, 0.4);
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  transition: transform 0.2s;
+}
+
+.float-quote:hover {
+  transform: translateY(-3px);
+}
+
+/* ==========================================================================
+   9. INTERACTIVE SCROLL ANIMATION STATES
+   ========================================================================== */
+.reveal {
+  opacity: 0;
+  transform: translateY(30px);
+  transition: all 0.8s;
+}
+
+.reveal.in {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+/* ==========================================================================
+   10. MOBILE & TABLET MEDIA QUERIES
+   ========================================================================== */
+@media (max-width: 960px) {
+  .nav-menu {
+    display: none;
+    position: absolute;
+    top: 100%;
+    left: 0;
+    right: 0;
+    background: var(--bg-2);
+    flex-direction: column;
+    padding: 24px;
+    gap: 16px;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .nav-menu.open {
+    display: flex;
+  }
+
+  .burger {
+    display: flex;
+  }
+
+  .case-wrap,
+  .contact-grid,
+  .foot-grid {
+    grid-template-columns: 1fr;
+    gap: 30px;
+  }
+
+  .hero-stats {
+    grid-template-columns: repeat(2, 1fr);
+  }
+
+  .float-quote {
+    padding: 10px 16px;
+    font-size: 12px;
+  }
+}
+
+@media (max-width: 560px) {
+  section {
+    padding: 70px 0;
+  }
+
+  .calc {
+    padding: 24px;
+  }
+
+  .hero-ctas .btn {
+    flex: 1;
+    justify-content: center;
+  }
+}
+:root {
+      --bg: #0a0a0b;
+      --bg-2: #111114;
+      --bg-3: #1a1a1f;
+      --text: #f5f5f7;
+      --text-dim: #a0a0a8;
+      --text-mute: #6b6b74;
+      --accent: #ff3d2e;
+      --accent-2: #ffb800;
+      --accent-3: #00d4ff;
+      --border: rgba(255, 255, 255, .08);
+      --card: rgba(255, 255, 255, .03);
+      --shadow: 0 20px 60px rgba(0, 0, 0, .5);
+      --radius: 14px;
+    }
+
+    [data-theme="light"] {
+      --bg: #fafafa;
+      --bg-2: #ffffff;
+      --bg-3: #f0f0f3;
+      --text: #0a0a0b;
+      --text-dim: #4a4a52;
+      --text-mute: #8a8a92;
+      --border: rgba(0, 0, 0, .08);
+      --card: rgba(0, 0, 0, .02);
+      --shadow: 0 20px 60px rgba(0, 0, 0, .08);
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box
+    }
+
+    html {
+      scroll-behavior: smooth
+    }
+
+    body {
+      font-family: 'Inter', sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      line-height: 1.6;
+      overflow-x: hidden;
+      transition: background .3s, color .3s;
+    }
+
+    img {
+      max-width: 100%;
+      display: block
+    }
+
+    a {
+      color: inherit;
+      text-decoration: none
+    }
+
+    .container {
+      max-width: 1320px;
+      margin: 0 auto;
+      padding: 0 24px
+    }
+
+    /* ===== Progress Bar ===== */
+    .progress-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      height: 3px;
+      background: linear-gradient(90deg, var(--accent), var(--accent-2));
+      z-index: 9999;
+      width: 0;
+      transition: width .1s
+    }
+
+    /* ===== Navigation ===== */
+    .nav {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      z-index: 1000;
+      padding: 18px 0;
+      transition: all .3s;
+      background: rgba(10, 10, 11, .7);
+      backdrop-filter: blur(20px);
+      border-bottom: 1px solid transparent;
+    }
+
+    .nav.scrolled {
+      padding: 12px 0;
+      border-bottom-color: var(--border)
+    }
+
+    .nav-inner {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      gap: 32px
+    }
+
+    .logo {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 28px;
+      letter-spacing: 2px;
+      display: flex;
+      align-items: center;
+      gap: 8px
+    }
+
+    .logo-mark {
+      width: 36px;
+      height: 36px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      border-radius: 8px;
+      display: grid;
+      place-items: center;
+      font-size: 20px;
+      color: #fff;
+      font-weight: 800;
+      font-family: 'Space Grotesk'
+    }
+
+    .nav-menu {
+      display: flex;
+      gap: 32px;
+      list-style: none;
+      align-items: center
+    }
+
+    .nav-menu a {
+      font-size: 14px;
+      font-weight: 500;
+      color: var(--text-dim);
+      transition: color .2s;
+      position: relative
+    }
+
+    .nav-menu a:hover {
+      color: var(--text)
+    }
+
+    .nav-menu a::after {
+      content: '';
+      position: absolute;
+      bottom: -6px;
+      left: 0;
+      width: 0;
+      height: 2px;
+      background: var(--accent);
+      transition: width .3s
+    }
+
+    .nav-menu a:hover::after {
+      width: 100%
+    }
+
+    .nav-actions {
+      display: flex;
+      gap: 12px;
+      align-items: center
+    }
+
+    .icon-btn {
+      width: 40px;
+      height: 40px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--card);
+      color: var(--text);
+      cursor: pointer;
+      display: grid;
+      place-items: center;
+      transition: all .2s
+    }
+
+    .icon-btn:hover {
+      border-color: var(--accent);
+      color: var(--accent)
+    }
+
+    .btn {
+      padding: 12px 22px;
+      border-radius: 10px;
+      font-weight: 600;
+      font-size: 14px;
+      cursor: pointer;
+      border: none;
+      transition: all .25s;
+      display: inline-flex;
+      align-items: center;
+      gap: 8px;
+      font-family: inherit;
+    }
+
+    .btn-primary {
+      background: var(--accent);
+      color: #fff
+    }
+
+    .btn-primary:hover {
+      background: #ff5544;
+      transform: translateY(-2px);
+      box-shadow: 0 10px 30px rgba(255, 61, 46, .4)
+    }
+
+    .btn-ghost {
+      background: transparent;
+      color: var(--text);
+      border: 1px solid var(--border)
+    }
+
+    .btn-ghost:hover {
+      border-color: var(--accent);
+      color: var(--accent)
+    }
+
+    .burger {
+      display: none;
+      flex-direction: column;
+      gap: 5px;
+      cursor: pointer;
+      background: none;
+      border: none;
+      padding: 8px
+    }
+
+    .burger span {
+      width: 24px;
+      height: 2px;
+      background: var(--text);
+      transition: .3s
+    }
+
+    /* ===== Hero ===== */
+    .hero {
+      min-height: 100vh;
+      position: relative;
+      display: flex;
+      align-items: center;
+      overflow: hidden;
+      padding: 120px 0 60px;
+    }
+
+    .hero-video {
+      position: absolute;
+      inset: 0;
+      z-index: 0;
+      overflow: hidden
+    }
+
+    .hero-video::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(10, 10, 11, .92), rgba(10, 10, 11, .75) 50%, rgba(10, 10, 11, .95))
+    }
+
+    .hero-video video {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .hero-content {
+      position: relative;
+      z-index: 2;
+      max-width: 900px
+    }
+
+    .hero-badge {
+      display: inline-flex;
+      align-items: center;
+      gap: 10px;
+      padding: 8px 16px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: 100px;
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-bottom: 28px;
+      backdrop-filter: blur(10px);
+    }
+
+    .hero-badge .dot {
+      width: 8px;
+      height: 8px;
+      background: #22c55e;
+      border-radius: 50%;
+      animation: pulse 2s infinite
+    }
+
+    @keyframes pulse {
+
+      0%,
+      100% {
+        opacity: 1
+      }
+
+      50% {
+        opacity: .4
+      }
+    }
+
+    .hero h1 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(56px, 10vw, 140px);
+      line-height: .95;
+      letter-spacing: -1px;
+      margin-bottom: 24px;
+    }
+
+    .hero h1 span {
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      -webkit-background-clip: text;
+      background-clip: text;
+      color: transparent;
+    }
+
+    .hero-sub {
+      font-size: clamp(15px, 1.5vw, 18px);
+      color: var(--text-dim);
+      max-width: 640px;
+      margin-bottom: 40px
+    }
+
+    .hero-ctas {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 14px;
+      margin-bottom: 60px
+    }
+
+    .btn-wa {
+      background: #25D366;
+      color: #fff
+    }
+
+    .btn-wa:hover {
+      background: #1fb855;
+      transform: translateY(-2px)
+    }
+
+    .hero-stats {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(140px, 1fr));
+      gap: 24px;
+      padding-top: 40px;
+      border-top: 1px solid var(--border)
+    }
+
+    .hero-stat .num {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 42px;
+      color: var(--accent);
+      line-height: 1
+    }
+
+    .hero-stat .lbl {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin-top: 4px
+    }
+
+    .scroll-ind {
+      position: absolute;
+      bottom: 30px;
+      left: 50%;
+      transform: translateX(-50%);
+      color: var(--text-mute);
+      font-size: 12px;
+      letter-spacing: 2px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      gap: 10px;
+      z-index: 2
+    }
+
+    .scroll-ind .line {
+      width: 1px;
+      height: 40px;
+      background: linear-gradient(var(--text-mute), transparent);
+      animation: scrollLine 2s infinite
+    }
+
+    @keyframes scrollLine {
+      0% {
+        transform: scaleY(0);
+        transform-origin: top
+      }
+
+      50% {
+        transform: scaleY(1);
+        transform-origin: top
+      }
+
+      51% {
+        transform-origin: bottom
+      }
+
+      100% {
+        transform: scaleY(0);
+        transform-origin: bottom
+      }
+    }
+
+    /* ===== Section Base ===== */
+    section {
+      padding: 100px 0;
+      position: relative
+    }
+
+    .section-head {
+      text-align: center;
+      max-width: 720px;
+      margin: 0 auto 60px
+    }
+
+    .eyebrow {
+      display: inline-block;
+      font-size: 12px;
+      letter-spacing: 3px;
+      color: var(--accent);
+      font-weight: 600;
+      text-transform: uppercase;
+      margin-bottom: 14px
+    }
+
+    .section-head h2 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(40px, 5vw, 68px);
+      line-height: 1;
+      letter-spacing: -.5px;
+      margin-bottom: 18px
+    }
+
+    .section-head p {
+      color: var(--text-dim);
+      font-size: 17px
+    }
+
+    /* ===== Services ===== */
+    .services-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+      gap: 20px
+    }
+
+    .service-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      transition: all .35s;
+      position: relative;
+      overflow: hidden;
+      cursor: pointer;
+    }
+
+    .service-card::before {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, var(--accent), transparent);
+      opacity: 0;
+      transition: opacity .35s;
+      z-index: 0;
+    }
+
+    .service-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent)
+    }
+
+    .service-card:hover::before {
+      opacity: .08
+    }
+
+    .service-card>* {
+      position: relative;
+      z-index: 1
+    }
+
+    .service-icon {
+      width: 56px;
+      height: 56px;
+      border-radius: 14px;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      margin-bottom: 20px;
+      font-size: 26px;
+    }
+
+    .service-card h3 {
+      font-family: 'Space Grotesk', sans-serif;
+      font-size: 22px;
+      margin-bottom: 10px;
+      font-weight: 700
+    }
+
+    .service-card p {
+      color: var(--text-dim);
+      font-size: 14px;
+      margin-bottom: 16px
+    }
+
+    .service-tags {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 6px
+    }
+
+    .service-tags span {
+      font-size: 11px;
+      padding: 4px 10px;
+      background: var(--bg-3);
+      border-radius: 100px;
+      color: var(--text-dim)
+    }
+
+    /* ===== Portfolio ===== */
+    .portfolio {
+      background: var(--bg-2)
+    }
+
+    .filter-bar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 10px;
+      justify-content: center;
+      margin-bottom: 40px
+    }
+
+    .filter-btn {
+      padding: 8px 18px;
+      border-radius: 100px;
+      border: 1px solid var(--border);
+      background: transparent;
+      color: var(--text-dim);
+      cursor: pointer;
+      font-size: 13px;
+      font-family: inherit;
+      transition: all .2s;
+    }
+
+    .filter-btn.active,
+    .filter-btn:hover {
+      background: var(--accent);
+      color: #fff;
+      border-color: var(--accent)
+    }
+
+    .portfolio-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+      gap: 16px
+    }
+
+    .port-item {
+      position: relative;
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4/5;
+      cursor: pointer;
+      background: var(--bg-3);
+    }
+
+    .port-item img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover;
+      transition: transform .6s
+    }
+
+    .port-item:hover img {
+      transform: scale(1.08)
+    }
+
+    .port-overlay {
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(to top, rgba(0, 0, 0, .9), transparent 60%);
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-end;
+      padding: 20px;
+      opacity: 0;
+      transition: opacity .3s;
+    }
+
+    .port-item:hover .port-overlay {
+      opacity: 1
+    }
+
+    .port-overlay .cat {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase
+    }
+
+    .port-overlay h4 {
+      font-size: 18px;
+      margin-top: 4px;
+      color: #fff
+    }
+
+    /* ===== Before/After ===== */
+    .ba-wrap {
+      max-width: 1000px;
+      margin: 0 auto;
+      border-radius: var(--radius);
+      overflow: hidden;
+      position: relative;
+      aspect-ratio: 16/10;
+      box-shadow: var(--shadow)
+    }
+
+    .ba-img {
+      position: absolute;
+      inset: 0;
+      background-size: cover;
+      background-position: center
+    }
+
+    .ba-before {
+      filter: grayscale(.6) brightness(.7)
+    }
+
+    .ba-after {
+      clip-path: inset(0 0 0 50%)
+    }
+
+    .ba-slider {
+      position: absolute;
+      top: 0;
+      bottom: 0;
+      left: 50%;
+      width: 4px;
+      background: #fff;
+      cursor: ew-resize;
+      z-index: 3;
+      transform: translateX(-50%)
+    }
+
+    .ba-handle {
+      position: absolute;
+      top: 50%;
+      left: 50%;
+      transform: translate(-50%, -50%);
+      width: 50px;
+      height: 50px;
+      border-radius: 50%;
+      background: #fff;
+      display: grid;
+      place-items: center;
+      color: #000;
+      font-weight: 700;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, .3);
+    }
+
+    .ba-label {
+      position: absolute;
+      top: 20px;
+      padding: 6px 14px;
+      background: rgba(0, 0, 0, .7);
+      color: #fff;
+      border-radius: 100px;
+      font-size: 12px;
+      letter-spacing: 2px;
+      z-index: 2
+    }
+
+    .ba-label.before {
+      left: 20px
+    }
+
+    .ba-label.after {
+      right: 20px
+    }
+
+    /* ===== Machines ===== */
+    .machines-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 16px
+    }
+
+    .machine-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 24px;
+      transition: all .3s;
+      position: relative;
+    }
+
+    .machine-card:hover {
+      border-color: var(--accent-3);
+      transform: translateY(-4px)
+    }
+
+    .machine-icon {
+      font-size: 36px;
+      margin-bottom: 14px
+    }
+
+    .machine-card h4 {
+      font-size: 16px;
+      margin-bottom: 6px;
+      font-weight: 600
+    }
+
+    .machine-card .cap {
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 12px
+    }
+
+    .machine-badge {
+      display: inline-block;
+      padding: 3px 10px;
+      background: var(--accent-3);
+      color: #000;
+      border-radius: 100px;
+      font-size: 10px;
+      font-weight: 700;
+      letter-spacing: 1px
+    }
+
+    /* ===== Quote Calculator ===== */
+    .calc {
+      background: linear-gradient(135deg, var(--bg-2), var(--bg-3));
+      border: 1px solid var(--border);
+      border-radius: 20px;
+      padding: 40px;
+      max-width: 900px;
+      margin: 0 auto
+    }
+
+    .calc-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+      gap: 18px;
+      margin-bottom: 28px
+    }
+
+    .field label {
+      display: block;
+      font-size: 12px;
+      color: var(--text-dim);
+      margin-bottom: 6px;
+      letter-spacing: 1px;
+      text-transform: uppercase
+    }
+
+    .field input,
+    .field select {
+      width: 100%;
+      padding: 12px 14px;
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      color: var(--text);
+      font-family: inherit;
+      font-size: 14px;
+      transition: border .2s;
+    }
+
+    .field input:focus,
+    .field select:focus {
+      outline: none;
+      border-color: var(--accent)
+    }
+
+    .calc-result {
+      background: var(--bg);
+      border: 1px solid var(--border);
+      border-radius: 14px;
+      padding: 24px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      flex-wrap: wrap;
+      gap: 16px;
+    }
+
+    .calc-result .price {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 48px;
+      color: var(--accent);
+      line-height: 1
+    }
+
+    .calc-result .price small {
+      font-size: 14px;
+      color: var(--text-dim);
+      font-family: 'Inter', sans-serif;
+      display: block;
+      margin-top: 4px
+    }
+
+    /* ===== Tatkal ===== */
+    .tatkal {
+      background: linear-gradient(135deg, rgba(255, 61, 46, .08), rgba(255, 184, 0, .05));
+      border-top: 1px solid var(--border);
+      border-bottom: 1px solid var(--border)
+    }
+
+    .tatkal-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(260px, 1fr));
+      gap: 20px
+    }
+
+    .tatkal-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px;
+      text-align: center;
+      position: relative;
+      overflow: hidden;
+    }
+
+    .tatkal-card.featured {
+      border-color: var(--accent);
+      background: linear-gradient(135deg, rgba(255, 61, 46, .1), transparent)
+    }
+
+    .tatkal-time {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 56px;
+      color: var(--accent);
+      line-height: 1;
+      margin-bottom: 8px
+    }
+
+    .tatkal-card h4 {
+      font-size: 18px;
+      margin-bottom: 10px
+    }
+
+    .tatkal-card ul {
+      list-style: none;
+      text-align: left;
+      margin-top: 16px
+    }
+
+    .tatkal-card li {
+      padding: 6px 0;
+      color: var(--text-dim);
+      font-size: 14px;
+      display: flex;
+      gap: 8px
+    }
+
+    .tatkal-card li::before {
+      content: '✓';
+      color: var(--accent);
+      font-weight: 700
+    }
+
+    /* ===== Industries ===== */
+    .ind-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(160px, 1fr));
+      gap: 12px
+    }
+
+    .ind-card {
+      padding: 24px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      text-align: center;
+      transition: all .3s;
+      cursor: pointer;
+    }
+
+    .ind-card:hover {
+      border-color: var(--accent);
+      transform: translateY(-4px);
+      background: var(--bg-3)
+    }
+
+    .ind-card .ic {
+      font-size: 32px;
+      margin-bottom: 10px
+    }
+
+    .ind-card h5 {
+      font-size: 14px;
+      font-weight: 600
+    }
+
+    /* ===== Case Study ===== */
+    .case {
+      background: var(--bg-2)
+    }
+
+    .case-wrap {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 60px;
+      align-items: center
+    }
+
+    .case-img {
+      border-radius: var(--radius);
+      overflow: hidden;
+      aspect-ratio: 4/3;
+      box-shadow: var(--shadow)
+    }
+
+    .case-img img {
+      width: 100%;
+      height: 100%;
+      object-fit: cover
+    }
+
+    .case h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 42px;
+      margin-bottom: 20px;
+      line-height: 1
+    }
+
+    .case-steps {
+      margin-top: 24px
+    }
+
+    .case-step {
+      display: flex;
+      gap: 16px;
+      padding: 14px 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .case-step:last-child {
+      border-bottom: none
+    }
+
+    .case-step .n {
+      width: 36px;
+      height: 36px;
+      border-radius: 10px;
+      background: var(--accent);
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      flex-shrink: 0
+    }
+
+    .case-step h5 {
+      font-size: 15px;
+      margin-bottom: 2px
+    }
+
+    .case-step p {
+      font-size: 13px;
+      color: var(--text-dim)
+    }
+
+    /* ===== Team ===== */
+    .team-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+      gap: 20px
+    }
+
+    .team-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all .3s;
+    }
+
+    .team-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent)
+    }
+
+    .team-img {
+      aspect-ratio: 1;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      font-size: 60px
+    }
+
+    .team-info {
+      padding: 20px;
+      text-align: center
+    }
+
+    .team-info h4 {
+      font-size: 16px;
+      margin-bottom: 4px
+    }
+
+    .team-info p {
+      font-size: 13px;
+      color: var(--text-dim)
+    }
+
+    /* ===== Testimonials ===== */
+    .testi {
+      background: var(--bg-2)
+    }
+
+    .testi-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 20px
+    }
+
+    .testi-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 28px;
+      position: relative;
+    }
+
+    .testi-card::before {
+      content: '"';
+      position: absolute;
+      top: 10px;
+      right: 20px;
+      font-family: 'Bebas Neue';
+      font-size: 80px;
+      color: var(--accent);
+      opacity: .3;
+      line-height: 1
+    }
+
+    .testi-stars {
+      color: var(--accent-2);
+      margin-bottom: 14px
+    }
+
+    .testi-text {
+      color: var(--text-dim);
+      font-size: 14px;
+      margin-bottom: 20px;
+      font-style: italic
+    }
+
+    .testi-author {
+      display: flex;
+      align-items: center;
+      gap: 12px
+    }
+
+    .testi-avatar {
+      width: 44px;
+      height: 44px;
+      border-radius: 50%;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      display: grid;
+      place-items: center;
+      font-weight: 700;
+      color: #fff
+    }
+
+    .testi-author h5 {
+      font-size: 14px
+    }
+
+    .testi-author p {
+      font-size: 12px;
+      color: var(--text-mute)
+    }
+
+    /* ===== Blog ===== */
+    .blog-grid {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+      gap: 24px
+    }
+
+    .blog-card {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      overflow: hidden;
+      transition: all .3s;
+      cursor: pointer
+    }
+
+    .blog-card:hover {
+      transform: translateY(-6px);
+      border-color: var(--accent)
+    }
+
+    .blog-img {
+      aspect-ratio: 16/10;
+      background: linear-gradient(135deg, var(--accent), var(--accent-2));
+      position: relative;
+      overflow: hidden
+    }
+
+    .blog-img::after {
+      content: '';
+      position: absolute;
+      inset: 0;
+      background: linear-gradient(135deg, rgba(0, 0, 0, .3), transparent)
+    }
+
+    .blog-body {
+      padding: 24px
+    }
+
+    .blog-meta {
+      font-size: 11px;
+      color: var(--accent);
+      letter-spacing: 2px;
+      text-transform: uppercase;
+      margin-bottom: 8px
+    }
+
+    .blog-card h4 {
+      font-size: 18px;
+      margin-bottom: 10px;
+      line-height: 1.3
+    }
+
+    .blog-card p {
+      font-size: 13px;
+      color: var(--text-dim)
+    }
+
+    /* ===== Contact ===== */
+    .contact {
+      background: var(--bg-2)
+    }
+
+    .contact-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 40px
+    }
+
+    .contact-info h3 {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: 42px;
+      margin-bottom: 16px;
+      line-height: 1
+    }
+
+    .contact-info p {
+      color: var(--text-dim);
+      margin-bottom: 28px
+    }
+
+    .contact-item {
+      display: flex;
+      gap: 16px;
+      padding: 16px 0;
+      border-bottom: 1px solid var(--border)
+    }
+
+    .contact-item:last-child {
+      border-bottom: none
+    }
+
+    .contact-ic {
+      width: 44px;
+      height: 44px;
+      border-radius: 12px;
+      background: var(--card);
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      flex-shrink: 0;
+      font-size: 18px
+    }
+
+    .contact-item h5 {
+      font-size: 14px;
+      margin-bottom: 2px
+    }
+
+    .contact-item p {
+      font-size: 13px;
+      color: var(--text-dim);
+      margin: 0
+    }
+
+    .contact-form {
+      background: var(--card);
+      border: 1px solid var(--border);
+      border-radius: var(--radius);
+      padding: 32px
+    }
+
+    .contact-form textarea {
+      resize: vertical;
+      min-height: 100px
+    }
+
+    /* ===== Footer ===== */
+    .footer {
+      background: var(--bg-2);
+      padding: 60px 0 30px;
+      border-top: 1px solid var(--border)
+    }
+
+    .foot-grid {
+      display: grid;
+      grid-template-columns: 2fr 1fr 1fr 1fr;
+      gap: 40px;
+      margin-bottom: 40px
+    }
+
+    .foot-about p {
+      color: var(--text-dim);
+      font-size: 14px;
+      margin: 16px 0;
+      max-width: 320px
+    }
+
+    .foot-col h5 {
+      font-size: 14px;
+      margin-bottom: 18px;
+      letter-spacing: 1px;
+      text-transform: uppercase
+    }
+
+    .foot-col ul {
+      list-style: none
+    }
+
+    .foot-col li {
+      margin-bottom: 10px
+    }
+
+    .foot-col a {
+      color: var(--text-dim);
+      font-size: 14px;
+      transition: color .2s
+    }
+
+    .foot-col a:hover {
+      color: var(--accent)
+    }
+
+    .foot-bottom {
+      padding-top: 24px;
+      border-top: 1px solid var(--border);
+      display: flex;
+      justify-content: space-between;
+      flex-wrap: wrap;
+      gap: 16px;
+      color: var(--text-mute);
+      font-size: 13px
+    }
+
+    .socials {
+      display: flex;
+      gap: 10px;
+      margin-top: 16px
+    }
+
+    .socials a {
+      width: 38px;
+      height: 38px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      display: grid;
+      place-items: center;
+      transition: all .2s
+    }
+
+    .socials a:hover {
+      background: var(--accent);
+      border-color: var(--accent);
+      color: #fff
+    }
+
+    /* ===== Floating Buttons ===== */
+    .float-wa {
+      position: fixed;
+      bottom: 24px;
+      right: 24px;
+      width: 60px;
+      height: 60px;
+      border-radius: 50%;
+      background: #25D366;
+      color: #fff;
+      display: grid;
+      place-items: center;
+      font-size: 28px;
+      box-shadow: 0 10px 30px rgba(37, 211, 102, .4);
+      z-index: 999;
+      transition: transform .2s;
+      animation: waPulse 2s infinite;
+    }
+
+    .float-wa:hover {
+      transform: scale(1.1)
+    }
+
+    @keyframes waPulse {
+
+      0%,
+      100% {
+        box-shadow: 0 10px 30px rgba(37, 211, 102, .4)
+      }
+
+      50% {
+        box-shadow: 0 10px 30px rgba(37, 211, 102, .7), 0 0 0 12px rgba(37, 211, 102, 0)
+      }
+    }
+
+    .float-quote {
+      position: fixed;
+      bottom: 24px;
+      left: 24px;
+      padding: 14px 22px;
+      border-radius: 100px;
+      background: var(--accent);
+      color: #fff;
+      font-weight: 600;
+      font-size: 14px;
+      z-index: 999;
+      box-shadow: 0 10px 30px rgba(255, 61, 46, .4);
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      transition: transform .2s;
+    }
+
+    .float-quote:hover {
+      transform: translateY(-3px)
+    }
+
+    /* ===== Reveal Animation ===== */
+    .reveal {
+      opacity: 0;
+      transform: translateY(30px);
+      transition: all .8s
+    }
+
+    .reveal.in {
+      opacity: 1;
+      transform: translateY(0)
+    }
+
+    /* ===== Responsive ===== */
+    @media (max-width:960px) {
+      .nav-menu {
+        display: none;
+        position: absolute;
+        top: 100%;
+        left: 0;
+        right: 0;
+        background: var(--bg-2);
+        flex-direction: column;
+        padding: 24px;
+        gap: 16px;
+        border-bottom: 1px solid var(--border)
+      }
+
+      .nav-menu.open {
+        display: flex
+      }
+
+      .burger {
+        display: flex
+      }
+
+      .case-wrap,
+      .contact-grid,
+      .foot-grid {
+        grid-template-columns: 1fr;
+        gap: 30px
+      }
+
+      .hero-stats {
+        grid-template-columns: repeat(2, 1fr)
+      }
+
+      .float-quote {
+        padding: 10px 16px;
+        font-size: 12px
+      }
+    }
+
+    @media (max-width:560px) {
+      section {
+        padding: 70px 0
+      }
+
+      .calc {
+        padding: 24px
+      }
+
+      .hero-ctas .btn {
+        flex: 1;
+        justify-content: center
+      }
+    }
+  </style>
+
+  
+</head>
+<body>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Inter:wght@300;400;500;600;700;800&family=Space+Grotesk:wght@500;700&display=swap" rel="stylesheet">
+
+  <div class="progress-bar" id="progress"></div>
+
+  <nav class="nav" id="nav">
+    <div class="container nav-inner">
+      <a href="#" class="logo"><span class="logo-mark">F</span>FlexBrand<span style="color:var(--accent)">.</span></a>
+      <ul class="nav-menu" id="navMenu">
+        <li><a href="#services" data-i18n="nav_services">Services</a></li>
+        <li><a href="#portfolio" data-i18n="nav_portfolio">Portfolio</a></li>
+        <li><a href="#machines" data-i18n="nav_machines">Machines</a></li>
+        <li><a href="#tatkal" data-i18n="nav_tatkal">Tatkal</a></li>
+        <li><a href="#industries" data-i18n="nav_industries">Industries</a></li>
+        <li><a href="#blog" data-i18n="nav_blog">Blog</a></li>
+        <li><a href="#contact" data-i18n="nav_contact">Contact</a></li>
+      </ul>
+      <div class="nav-actions">
+        <select class="icon-btn" id="langSel" style="width:auto;padding:0 10px;font-size:12px">
+          <option value="en">EN</option>
+          <option value="hi">हिं</option>
+          <option value="mr">मर</option>
+        </select>
+        <button class="icon-btn" id="themeBtn" title="Toggle theme">🌙</button>
+        <a href="#quote" class="btn btn-primary" data-i18n="nav_quote">Get Quote</a>
+        <button class="burger" id="burger"><span></span><span></span><span></span></button>
+      </div>
+    </div>
+  </nav>
+
+  <section class="hero">
+    <div class="hero-video">
+      <video autoplay muted loop playsinline poster="https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=1920">
+        <source src="https://cdn.pixabay.com/video/2020/08/30/48569-454825064_large.mp4" type="video/mp4">
+      </video>
+    </div>
+    <div class="container hero-content">
+      <div class="hero-badge"><span class="dot"></span> <span data-i18n="hero_badge">PAN India • 24/7 Production • 15+ Years</span></div>
+      <h1 data-i18n="hero_title">We Print.<br>We Build.<br><span>We Brand.</span></h1>
+      <p class="hero-sub" data-i18n="hero_sub">Corporate Branding • Flex Printing • Political Campaigns • Event Branding • Fabrication • Installation — all under one roof.</p>
+      <div class="hero-ctas">
+        <a href="#quote" class="btn btn-primary" data-i18n="cta_quote">⚡ Get Instant Quote</a>
+        <a href="#portfolio" class="btn btn-ghost" data-i18n="cta_portfolio">View Portfolio →</a>
+        <a href="tel:+919999999999" class="btn btn-ghost">📞 Call Now</a>
+        <a href="https://wa.me/919999999999" class="btn btn-wa">💬 WhatsApp</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat">
+          <div class="num" data-count="5000">0</div>
+          <div class="lbl" data-i18n="stat_projects">Projects Delivered</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num" data-count="250">0</div>
+          <div class="lbl" data-i18n="stat_clients">Corporate Clients</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num" data-count="100">0</div>
+          <div class="lbl" data-i18n="stat_political">Political Campaigns</div>
+        </div>
+        <div class="hero-stat">
+          <div class="num" data-count="15">0</div>
+          <div class="lbl" data-i18n="stat_years">Years Experience</div>
+        </div>
+      </div>
+    </div>
+    <div class="scroll-ind"><span>SCROLL</span>
+      <div class="line"></div>
+    </div>
+  </section>
+
+  <section id="services">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="svc_eyebrow">What We Do</span>
+        <h2 data-i18n="svc_title">End-to-End Branding Services</h2>
+        <p data-i18n="svc_sub">From concept to installation — one partner for every branding need.</p>
+      </div>
+      <div class="services-grid">
+        <div class="service-card reveal">
+          <div class="service-icon">🖨️</div>
+          <h3>Flex Printing</h3>
+          <p>Large format flex printing for hoardings, banners & outdoor branding.</p>
+          <div class="service-tags"><span>Frontlit</span><span>Backlit</span><span>Star Flex</span><span>Blackback</span><span>Vinyl</span><span>Mesh</span></div>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🎨</div>
+          <h3>Digital Printing</h3>
+          <p>High-resolution UV, latex & eco-solvent printing for premium finishes.</p>
+          <div class="service-tags"><span>UV</span><span>Latex</span><span>Canvas</span><span>Wallpaper</span><span>Photo Paper</span></div>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">📄</div>
+          <h3>Offset Printing</h3>
+          <p>Mass production of stationery, brochures, catalogs & packaging.</p>
+          <div class="service-tags"><span>Visiting Cards</span><span>Brochure</span><span>Calendar</span><span>Magazine</span></div>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🏢</div>
+          <h3>Corporate Branding</h3>
+          <p>Complete office, reception & façade branding with premium materials.</p>
+          <div class="service-tags"><span>ACP</span><span>3D Acrylic</span><span>LED</span><span>Glass</span><span>Wall Graphics</span></div>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">📣</div>
+          <h3>Political Campaign</h3>
+          <p>Full election campaign management — from design to roadshow execution.</p>
+          <div class="service-tags"><span>Cutouts</span><span>LED Van</span><span>Hoardings</span><span>Booth Branding</span></div>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🎉</div>
+          <h3>Event Branding</h3>
+          <p>Weddings, corporate events, trade fairs — complete event theming.</p>
+          <div class="service-tags"><span>Wedding</span><span>Concert</span><span>Exhibition</span><span>Product Launch</span></div>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🔧</div>
+          <h3>Fabrication</h3>
+          <p>MS, ACP, acrylic, wood & steel fabrication with CNC & laser precision.</p>
+          <div class="service-tags"><span>CNC</span><span>Laser</span><span>Acrylic</span><span>Steel</span><span>Sign Boards</span></div>
+        </div>
+        <div class="service-card reveal">
+          <div class="service-icon">🏗️</div>
+          <h3>Installation</h3>
+          <p>Sky lift, scaffolding, rope access — safe installation across India.</p>
+          <div class="service-tags"><span>Boom Lift</span><span>Rope Access</span><span>Night Install</span><span>Airport</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="portfolio" class="portfolio">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow" data-i18n="port_eyebrow">Our Work</span>
+        <h2 data-i18n="port_title">Portfolio That Speaks</h2>
+        <p data-i18n="port_sub">5000+ projects delivered across India. Filter by category.</p>
+      </div>
+      <div class="filter-bar reveal">
+        <button class="filter-btn active" data-filter="all">All</button>
+        <button class="filter-btn" data-filter="corporate">Corporate</button>
+        <button class="filter-btn" data-filter="political">Political</button>
+        <button class="filter-btn" data-filter="events">Events</button>
+        <button class="filter-btn" data-filter="retail">Retail</button>
+        <button class="filter-btn" data-filter="vehicle">Vehicle</button>
+      </div>
+      <div class="portfolio-grid" id="portGrid">
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Transformation</span>
+        <h2>Before & After</h2>
+        <p>Drag the slider to see the transformation.</p>
+      </div>
+      <div class="ba-wrap reveal" id="baWrap">
+        <div class="ba-img ba-before" style="background-image:url('https://images.unsplash.com/photo-1497366216548-37526070297c?w=1200')"></div>
+        <div class="ba-img ba-after" id="baAfter" style="background-image:url('https://images.unsplash.com/photo-1497366811353-6870744d04b2?w=1200')"></div>
+        <span class="ba-label before">BEFORE</span>
+        <span class="ba-label after">AFTER</span>
+        <div class="ba-slider" id="baSlider">
+          <div class="ba-handle">⇆</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="machines" style="background:var(--bg-2)">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Infrastructure</span>
+        <h2>Our Machinery</h2>
+        <p>World-class production infrastructure — speed, precision, capacity.</p>
+      </div>
+      <div class="machines-grid">
+        <div class="machine-card reveal">
+          <div class="machine-icon">🖨️</div>
+          <h4>16ft Solvent Printer</h4>
+          <div class="cap">1440 DPI • 80 sqm/hr</div><span class="machine-badge">HIGH SPEED</span>
+        </div>
+        <div class="machine-card reveal">
+          <div class="machine-icon">🎨</div>
+          <h4>UV Flatbed Printer</h4>
+          <div class="cap">Direct-to-substrate • 50mm thick</div><span class="machine-badge">UV</span>
+        </div>
+        <div class="machine-card reveal">
+          <div class="machine-icon">⚡</div>
+          <h4>Laser Cutting</h4>
+          <div class="cap">Acrylic, Wood, Metal</div><span class="machine-badge">PRECISION</span>
+        </div>
+        <div class="machine-card reveal">
+          <div class="machine-icon">🔩</div>
+          <h4>CNC Router</h4>
+          <div class="cap">3D carving • 4x8 ft bed</div><span class="machine-badge">CNC</span>
+        </div>
+        <div class="machine-card reveal">
+          <div class="machine-icon">📰</div>
+          <h4>Offset Press</h4>
+          <div class="cap">4-color • 10,000/hr</div><span class="machine-badge">MASS</span>
+        </div>
+        <div class="machine-card reveal">
+          <div class="machine-icon">💡</div>
+          <h4>LED Fabrication</h4>
+          <div class="cap">3D letters, neon, glow signs</div><span class="machine-badge">LED</span>
+        </div>
+        <div class="machine-card reveal">
+          <div class="machine-icon">📐</div>
+          <h4>Plotter & Cutter</h4>
+          <div class="cap">Vinyl, reflective, heat transfer</div><span class="machine-badge">PLOTTER</span>
+        </div>
+        <div class="machine-card reveal">
+          <div class="machine-icon">🛡️</div>
+          <h4>Lamination</h4>
+          <div class="cap">Matte, gloss, texture</div><span class="machine-badge">FINISH</span>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="quote">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Instant Estimate</span>
+        <h2>Quote Calculator</h2>
+        <p>Get an instant price estimate. Final quote confirmed after design review.</p>
+      </div>
+      <div class="calc reveal">
+        <div class="calc-grid">
+          <div class="field"><label>Product</label>
+            <select id="qProduct">
+              <option value="15">Flex Banner (₹15/sqft)</option>
+              <option value="25">Backlit Flex (₹25/sqft)</option>
+              <option value="45">Vinyl Print (₹45/sqft)</option>
+              <option value="85">ACP Sign Board (₹85/sqft)</option>
+              <option value="250">3D Acrylic Letters (₹250/sqft)</option>
+              <option value="450">LED Glow Sign (₹450/sqft)</option>
+              <option value="8">Visiting Cards (₹8/pc)</option>
+              <option value="120">Standee (₹120/pc)</option>
+            </select>
+          </div>
+          <div class="field"><label>Width (ft)</label><input type="number" id="qW" value="10" min="1"></div>
+          <div class="field"><label>Height (ft)</label><input type="number" id="qH" value="4" min="1"></div>
+          <div class="field"><label>Quantity</label><input type="number" id="qQty" value="1" min="1"></div>
+          <div class="field"><label>Installation</label>
+            <select id="qInstall">
+              <option value="0">No Installation</option>
+              <option value="500">Basic (₹500)</option>
+              <option value="1500">Height / Sky Lift (₹1500)</option>
+              <option value="3500">Heavy Fabrication (₹3500)</option>
+            </select>
+          </div>
+          <div class="field"><label>Urgency</label>
+            <select id="qUrgent">
+              <option value="1">Standard (3-5 days)</option>
+              <option value="1.3">Express (+30%)</option>
+              <option value="1.8">Tatkal (+80%)</option>
+            </select>
+          </div>
+        </div>
+        <div class="calc-result">
+          <div>
+            <div style="font-size:12px;color:var(--text-dim);letter-spacing:2px;text-transform:uppercase">Estimated Price</div>
+            <div class="price">₹<span id="qPrice">0</span><small>Inclusive of GST • Final quote on confirmation</small></div>
+          </div>
+          <div style="display:flex;gap:10px;flex-wrap:wrap">
+            <a href="https://wa.me/919999999999" class="btn btn-wa">💬 WhatsApp Quote</a>
+            <a href="#contact" class="btn btn-primary">Confirm Order →</a>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="tatkal" class="tatkal">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Emergency Service</span>
+        <h2>Tatkal Printing</h2>
+        <p>When time is critical — we deliver. 24x7 emergency production.</p>
+      </div>
+      <div class="tatkal-grid">
+        <div class="tatkal-card reveal">
+          <div class="tatkal-time">30<span style="font-size:24px">min</span></div>
+          <h4>Flash Delivery</h4>
+          <p style="color:var(--text-dim);font-size:14px">Emergency cards, stickers, small prints</p>
+          <ul>
+            <li>Visiting Cards</li>
+            <li>Stickers & Labels</li>
+            <li>Small Banners</li>
+            <li>ID Cards</li>
+          </ul>
+        </div>
+        <div class="tatkal-card featured reveal">
+          <div class="tatkal-time">1<span style="font-size:24px">hr</span></div>
+          <h4>Rapid Print</h4>
+          <p style="color:var(--text-dim);font-size:14px">Most popular for urgent events</p>
+          <ul>
+            <li>Flex Banners</li>
+            <li>Standees</li>
+            <li>Wedding Props</li>
+            <li>Event Materials</li>
+            <li>Political Emergency</li>
+          </ul>
+        </div>
+        <div class="tatkal-card reveal">
+          <div class="tatkal-time">24<span style="font-size:24px">hr</span></div>
+          <h4>Same Day</h4>
+          <p style="color:var(--text-dim);font-size:14px">Large orders, complete event branding</p>
+          <ul>
+            <li>Corporate Events</li>
+            <li>Shop Openings</li>
+            <li>Large Fabrication</li>
+            <li>Night Installation</li>
+          </ul>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="industries">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Who We Serve</span>
+        <h2>Industries We Brand</h2>
+        <p>Trusted across sectors — from banks to builders, hospitals to hotels.</p>
+      </div>
+      <div class="ind-grid">
+        <div class="ind-card reveal">
+          <div class="ic">🏢</div>
+          <h5>Corporate</h5>
+        </div>
+        <div class="ind-card reveal">
+          <div class="ic">🛍️</div>
+          <h5>Retail</h5>
+        </div>
+        <div class="ind-card reveal">
+          <div class="ic">🎓</div>
+          <h5>Education</h5>
+        </div>
+        <div class="ind-card reveal">
+          <div class="ic">🏥</div>
+          <h5>Healthcare</h5>
+        </div>
+        <div class="ind-card reveal">
+          <div class="ic">🚗</div>
+          <h5>Automobile</h5>
+        </div>
+        <div class="ind-card reveal">
+          <div class="ic">🏛️</div>
+          <h5>Government</h5>
+        </div>
+        <div class="ind-card reveal">
+          <div class="ic">📣</div>
+          <h5>Political</h5>
+        </div>
+        <div class="ind-card reveal">
+          <div class="ic">🏨</div>
+          <h5>Hotels</h5>
+        </div>
+        <div class="ind-card reveal">
+          <div class="ic">🏗️</div>
+          <h5>Builders</h5>
+        </div>
+        <div class="ind-card reveal">
+          <div class="ic">🏭</div>
+          <h5>Manufacturing</h5>
+        </div>
+        <div class="ind-card reveal">
+          <div class="ic">💎</div>
+          <h5>Jewellery</h5>
+        </div>
+        <div class="ind-card reveal">
+          <div class="ic">🏦</div>
+          <h5>Banking</h5>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="case">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Featured Project</span>
+        <h2>Case Study</h2>
+      </div>
+      <div class="case-wrap">
+        <div class="case-img reveal"><img src="https://images.unsplash.com/photo-1581091226825-a6a2a5aee158?w=900" alt="Mahindra Showroom"></div>
+        <div class="reveal">
+          <span class="eyebrow">Mahindra Showroom • Pune</span>
+          <h3>Complete Dealership Branding — 12,000 sqft</h3>
+          <p style="color:var(--text-dim)">End-to-end branding of flagship showroom including façade, interiors, signage, vehicle displays & outdoor hoardings.</p>
+          <div class="case-steps">
+            <div class="case-step">
+              <div class="n">1</div>
+              <div>
+                <h5>Challenge</h5>
+                <p>Rebrand 40-year-old dealership in 15 days without closing operations.</p>
+              </div>
+            </div>
+            <div class="case-step">
+              <div class="n">2</div>
+              <div>
+                <h5>Design</h5>
+                <p>3D mockups, brand-aligned color palette, LED integration plan.</p>
+              </div>
+            </div>
+            <div class="case-step">
+              <div class="n">3</div>
+              <div>
+                <h5>Production</h5>
+                <p>12 machines running 24x7 — ACP, acrylic, vinyl, LED modules.</p>
+              </div>
+            </div>
+            <div class="case-step">
+              <div class="n">4</div>
+              <div>
+                <h5>Installation</h5>
+                <p>18-member team, night installation, zero downtime achieved.</p>
+              </div>
+            </div>
+            <div class="case-step">
+              <div class="n">✓</div>
+              <div>
+                <h5>Delivered in 13 days</h5>
+                <p>Client footfall up 34% post-rebrand.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Our People</span>
+        <h2>The Team Behind Every Project</h2>
+      </div>
+      <div class="team-grid">
+        <div class="team-card reveal">
+          <div class="team-img">🎨</div>
+          <div class="team-info">
+            <h4>Creative Designers</h4>
+            <p>12 in-house designers</p>
+          </div>
+        </div>
+        <div class="team-card reveal">
+          <div class="team-img">🧊</div>
+          <div class="team-info">
+            <h4>3D Visualizers</h4>
+            <p>Mockups & renders</p>
+          </div>
+        </div>
+        <div class="team-card reveal">
+          <div class="team-img">⚙️</div>
+          <div class="team-info">
+            <h4>Machine Operators</h4>
+            <p>Certified technicians</p>
+          </div>
+        </div>
+        <div class="team-card reveal">
+          <div class="team-img">🏗️</div>
+          <div class="team-info">
+            <h4>Installation Crew</h4>
+            <p>Safety-trained team</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="testi">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Client Love</span>
+        <h2>What Clients Say</h2>
+      </div>
+      <div class="testi-grid">
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"FlexBrand executed our entire dealership rebrand in record time. Quality, professionalism, and on-time delivery — exceptional."</p>
+          <div class="testi-author">
+            <div class="testi-avatar">RK</div>
+            <div>
+              <h5>Rajesh Kulkarni</h5>
+              <p>Dealer Principal, Mahindra Pune</p>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"Our election campaign needed 500+ banners in 48 hours. They delivered with perfect quality. Truly tatkal service!"</p>
+          <div class="testi-author">
+            <div class="testi-avatar">SP</div>
+            <div>
+              <h5>Suresh Patil</h5>
+              <p>Campaign Manager, MLA Election</p>
+            </div>
+          </div>
+        </div>
+        <div class="testi-card reveal">
+          <div class="testi-stars">★★★★★</div>
+          <p class="testi-text">"From design to installation, everything was handled seamlessly. Our dynamic site assets looked professional. Highly recommended!"</p>
+          <div class="testi-author">
+            <div class="testi-avatar">AM</div>
+            <div>
+              <h5>Anita Mehta</h5>
+              <p>Operations Head</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="blog">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Knowledge Hub</span>
+        <h2>From Our Blog</h2>
+      </div>
+      <div class="blog-grid">
+        <div class="blog-card reveal">
+          <div class="blog-img" style="background:linear-gradient(135deg,#ff3d2e,#ffb800)"></div>
+          <div class="blog-body">
+            <div class="blog-meta">GUIDE • 5 MIN READ</div>
+            <h4>Best Flex Material for Outdoor Hoardings: Complete Guide 2026</h4>
+            <p>Frontlit vs backlit vs star flex — which one to choose for your brand visibility?</p>
+          </div>
+        </div>
+        <div class="blog-card reveal">
+          <div class="blog-img" style="background:linear-gradient(135deg,#00d4ff,#ff3d2e)"></div>
+          <div class="blog-body">
+            <div class="blog-meta">POLITICAL • 8 MIN READ</div>
+            <h4>Winning Election Campaign Branding: Lessons from 100+ Campaigns</h4>
+            <p>How to create maximum impact with cutouts, LED vans, booth branding & rallies.</p>
+          </div>
+        </div>
+        <div class="blog-card reveal">
+          <div class="blog-img" style="background:linear-gradient(135deg,#ffb800,#00d4ff)"></div>
+          <div class="blog-body">
+            <div class="blog-meta">CORPORATE • 6 MIN READ</div>
+            <h4>Office Branding Ideas That Impress Clients & Employees</h4>
+            <p>Reception, glass walls, 3D logos — transform your workspace into a brand statement.</p>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section id="contact" class="contact">
+    <div class="container">
+      <div class="section-head reveal">
+        <span class="eyebrow">Get In Touch</span>
+        <h2>Let's Build Something Great</h2>
+      </div>
+      <div class="contact-grid">
+        <div class="contact-info reveal">
+          <h3>Ready to start your project?</h3>
+          <p>24x7 support. Get a quote in 30 minutes. PAN India delivery.</p>
+          <div class="contact-item">
+            <div class="contact-ic">📍</div>
+            <div>
+              <h5>Head Office & Factory</h5>
+              <p>Plot 42, MIDC Industrial Area, Pune 411019</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-ic">📞</div>
+            <div>
+              <h5>Call / WhatsApp</h5>
+              <p>+91 99999 99999 • 24x7 Emergency Line</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-ic">✉️</div>
+            <div>
+              <h5>Email</h5>
+              <p>hello@flexbrand.in • quote@flexbrand.in</p>
+            </div>
+          </div>
+          <div class="contact-item">
+            <div class="contact-ic">🕐</div>
+            <div>
+              <h5>Working Hours</h5>
+              <p>Mon–Sat: 9 AM – 9 PM • Emergency: 24x7</p>
+            </div>
+          </div>
+        </div>
+        <form class="contact-form reveal" onsubmit="event.preventDefault();alert('✅ Thank you! We will contact you within 30 minutes.');this.reset();">
+          <div class="calc-grid">
+            <div class="field"><label>Your Name</label><input type="text" required placeholder="John Doe"></div>
+            <div class="field"><label>Phone</label><input type="tel" required placeholder="+91 99999 99999"></div>
+            <div class="field"><label>Email</label><input type="email" placeholder="you@company.com"></div>
+            <div class="field"><label>Service Needed</label>
+              <select>
+                <option>Flex Printing</option>
+                <option>Corporate Branding</option>
+                <option>Political Campaign</option>
+                <option>Event Branding</option>
+                <option>Other</option>
+              </select>
+            </div>
+          </div>
+          <div class="field" style="margin-bottom:20px"><label>Project Details</label><textarea placeholder="Tell us about your project — size, quantity, timeline..."></textarea></div>
+          <button type="submit" class="btn btn-primary" style="width:100%;justify-content:center;padding:16px">🚀 Send Enquiry</button>
+        </form>
+      </div>
+    </div>
+  </section>
+
+  <footer class="footer">
+    <div class="container">
+      <div class="foot-grid">
+        <div class="foot-about">
+          <a href="#" class="logo"><span class="logo-mark">F</span>FlexBrand<span style="color:var(--accent)">.</span></a>
+          <p>India's End-to-End Branding & Printing Infrastructure Company. Think It, We Print It.</p>
+          <div class="socials">
+            <a href="#">📘</a><a href="#">📷</a><a href="#">🐦</a><a href="#">💼</a><a href="#">▶️</a>
+          </div>
+        </div>
+        <div class="foot-col">
+          <h5>Services</h5>
+          <ul>
+            <li><a href="#services">Flex Printing</a></li>
+            <li><a href="#services">Digital Printing</a></li>
+            <li><a href="#services">Corporate Branding</a></li>
+            <li><a href="#services">Political Campaign</a></li>
+            <li><a href="#services">Event Branding</a></li>
+            <li><a href="#services">Fabrication</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Company</h5>
+          <ul>
+            <li><a href="#">About Us</a></li>
+            <li><a href="#portfolio">Portfolio</a></li>
+            <li><a href="#machines">Machines</a></li>
+            <li><a href="#blog">Blog</a></li>
+          </ul>
+        </div>
+        <div class="foot-col">
+          <h5>Quick Links</h5>
+          <ul>
+            <li><a href="#quote">Get Quote</a></li>
+            <li><a href="#tatkal">Tatkal Printing</a></li>
+            <li><a href="#contact">Contact</a></li>
+          </ul>
+        </div>
+      </div>
+      <div class="foot-bottom">
+        <div>© 2026 FlexBrand India. All rights reserved.</div>
+        <div>Made with ❤️ in Pune • PAN India Service</div>
+      </div>
+    </div>
+  </footer>
+
+  <a href="https://wa.me/919999999999" class="float-wa" title="WhatsApp">💬</a>
+  <a href="#quote" class="float-quote">⚡ Get Quote</a>
+
+  <script>
+    /**
+ * FlexBrand India - Main Application Architecture
+ * Handles Dynamic Content Generation, UI State, Event Hooks, and Real-time Pricing Logic.
+ */
+
+// ==========================================
+// 1. DATA STORES & CONFIGURATIONS
+// ==========================================
+
+const PORTFOLIO_DATA = [
+  { cat: 'corporate', title: 'HDFC Bank Façade', img: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=600' },
+  { cat: 'corporate', title: 'Apollo Hospital Signage', img: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=600' },
+  { cat: 'corporate', title: 'TCS Office Branding', img: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600' },
+  { cat: 'political', title: 'Election Rally Stage', img: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600' },
+  { cat: 'political', title: 'Road Show Branding', img: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600' },
+  { cat: 'political', title: 'LED Campaign Van', img: 'https://images.unsplash.com/photo-1533518463841-d62e1fc91c79?w=600' },
+  { cat: 'events',    title: 'Grand Wedding Stage', img: 'https://images.unsplash.com/photo-1519741495944-211a647963d5?w=600' }
+];
+
+const TRANSLATIONS = {
+  en: {
+    nav_services: "Services", nav_portfolio: "Portfolio", nav_machines: "Machines",
+    nav_tatkal: "Tatkal", nav_industries: "Industries", nav_blog: "Blog", nav_contact: "Contact",
+    nav_quote: "Get Quote", hero_badge: "PAN India • 24/7 Production • 15+ Years",
+    hero_title: "We Print.<br>We Build.<br><span>We Brand.</span>",
+    hero_sub: "Corporate Branding • Flex Printing • Political Campaigns • Event Branding • Fabrication • Installation — all under one roof.",
+    cta_quote: "⚡ Get Instant Quote", cta_portfolio: "View Portfolio →",
+    stat_projects: "Projects Delivered", stat_clients: "Corporate Clients", stat_political: "Political Campaigns", stat_years: "Years Experience",
+    svc_eyebrow: "What We Do", svc_title: "End-to-End Branding Services", svc_sub: "From concept to installation — one partner for every branding need.",
+    port_eyebrow: "Our Work", port_title: "Portfolio That Speaks", port_sub: "5000+ projects delivered across India. Filter by category."
+  },
+  hi: {
+    nav_services: "सेवाएं", nav_portfolio: "पोर्टफोलियो", nav_machines: "मशीनें",
+    nav_tatkal: "तत्काल", nav_industries: "उद्योग", nav_blog: "ब्लॉग", nav_contact: "संपर्क",
+    nav_quote: "कोटेशन लें", hero_badge: "पैन इंडिया • 24/7 उत्पादन • 15+ वर्ष अनुभव",
+    hero_title: "हम प्रिंट करते हैं।<br>हम बनाते हैं।<br><span>हम ब्रांड बनाते हैं।</span>",
+    hero_sub: "कॉर्पोरेट ब्रांडिंग • फ्लेक्स प्रिंटिंग • राजनीतिक अभियान • इवेंट ब्रांडिंग • फैब्रिकेशन • इंस्टॉलेशन — सब एक ही छत के नीचे।",
+    cta_quote: "⚡ तुरंत कोटेशन प्राप्त करें", cta_portfolio: "पोर्टफोलियो देखें →",
+    stat_projects: "सफल प्रोजेक्ट्स", stat_clients: "कॉर्पोरेट क्लाइंट्स", stat_political: "राजनीतिक अभियान", stat_years: "वर्षों का अनुभव",
+    svc_eyebrow: "हम क्या करते हैं", svc_title: "एंड-टू-एंड ब्रांडिंग सेवाएं", svc_sub: "कॉन्सेप्ट से लेकर इंस्टॉलेशन तक — हर ब्रांडिंग आवश्यकता के लिए एक पार्टनर।",
+    port_eyebrow: "हमारा काम", port_title: "पोर्टफोलियो जो बोलता है", port_sub: "पूरे भारत में 5000+ प्रोजेक्ट्स वितरित किए गए। श्रेणी के अनुसार फ़िल्टर करें।"
+  },
+  mr: {
+    nav_services: "सेवा", nav_portfolio: "पोर्टफोलिओ", nav_machines: "मशीनरी",
+    nav_tatkal: "तत्काळ", nav_industries: "उद्योग", nav_blog: "ब्लॉग", nav_contact: "संपर्क",
+    nav_quote: "दरपत्रक मिळवा", hero_badge: "पॅन इंडिया • 24/7 उत्पादन • 15+ वर्षे",
+    hero_title: "आम्ही प्रिंट करतो.<br>आम्ही बनवतो.<br><span>आम्ही ब्रँड करतो.</span>",
+    hero_sub: "कॉर्पोरेट ब्रँडिंग • फ्लेक्स प्रिंटिंग • राजकीय मोहीम • इव्हेंट ब्रँडिंग • फॅब्रिकेशन • इन्स्टॉलेशन — सर्व काही एकाच छताखाली.",
+    cta_quote: "⚡ त्वरित दरपत्रक", cta_portfolio: "पोर्टफोलिओ पहा →",
+    stat_projects: "यशस्वी प्रोजेक्ट्स", stat_clients: "कॉर्पोरेट क्लायंट्स", stat_political: "राजकीय मोहिमा", stat_years: "वर्षांचा अनुभव",
+    svc_eyebrow: "आम्ही काय करतो", svc_title: "एंड-टू-एंड ब्रँडिंग सेवा", svc_sub: "संकल्पनेपासून ते इन्स्टॉलेशनपर्यंत — प्रत्येक ब्रँडिंग गरजेसाठी एकच भागीदार.",
+    port_eyebrow: "आमचे काम", port_title: "प्रभावी पोर्टफोलिओ", port_sub: "भारतभरात 5000+ प्रोजेक्ट्स पूर्ण केले. श्रेणीनुसार फिल्टर करा."
+  }
+};
+
+// ==========================================
+// 2. CORE APPLICATION INITIALIZATION
+// ==========================================
+document.addEventListener('DOMContentLoaded', () => {
+  initScrollEffects();
+  initMobileMenu();
+  initThemeEngine();
+  initPortfolioGrid();
+  initBeforeAfterSlider();
+  initCounterAnimations();
+  initQuoteCalculator();
+  initLocalization();
+});
+
+// ==========================================
+// 3. UI LAYOUT & EVENT CONTROLLERS
+// ==========================================
+
+function initScrollEffects() {
+  const progressBar = document.getElementById('progress');
+  const navContainer = document.getElementById('nav');
+
+  window.addEventListener('scroll', () => {
+    const docElem = document.documentElement;
+    const scrollPercent = (docElem.scrollTop / (docElem.scrollHeight - docElem.clientHeight)) * 100;
+    
+    if (progressBar) progressBar.style.width = `${scrollPercent}%`;
+    if (navContainer) navContainer.classList.toggle('scrolled', window.scrollY > 50);
+  });
+
+  // Reveal Element Entry Animation Engine
+  const revealObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        entry.target.classList.add('in');
+        revealObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.1 });
+
+  document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+}
+
+function initMobileMenu() {
+  const burger = document.getElementById('burger');
+  const navMenu = document.getElementById('navMenu');
+
+  if (burger && navMenu) {
+    burger.addEventListener('click', (e) => {
+      e.stopPropagation();
+      navMenu.classList.toggle('open');
+    });
+
+    document.querySelectorAll('#navMenu a').forEach(link => {
+      link.addEventListener('click', () => navMenu.classList.remove('open'));
+    });
+
+    document.addEventListener('click', () => navMenu.classList.remove('open'));
+  }
+}
+
+function initThemeEngine() {
+  const themeBtn = document.getElementById('themeBtn');
+  if (!themeBtn) return;
+
+  themeBtn.addEventListener('click', () => {
+    const currentTheme = document.documentElement.getAttribute('data-theme');
+    const nextTheme = currentTheme === 'dark' ? 'light' : 'dark';
+    
+    document.documentElement.setAttribute('data-theme', nextTheme);
+    themeBtn.textContent = nextTheme === 'dark' ? '🌙' : '☀️';
+  });
+}
+
+// ==========================================
+// 4. PORTFOLIO ENGINE (RENDERING & FILTERING)
+// ==========================================
+
+function initPortfolioGrid() {
+  const grid = document.getElementById('portGrid');
+  const filterButtons = document.querySelectorAll('.filter-btn');
+  if (!grid) return;
+
+  function renderGrid(filter = 'all') {
+    grid.innerHTML = '';
+    const filteredData = filter === 'all' ? PORTFOLIO_DATA : PORTFOLIO_DATA.filter(item => item.cat === filter);
+
+    filteredData.forEach(item => {
+      const itemElement = document.createElement('div');
+      itemElement.className = 'port-item reveal in';
+      itemElement.innerHTML = `
+        <img src="${item.img}" alt="${item.title}" loading="lazy">
+        <div class="port-overlay">
+          <span class="cat">${item.cat}</span>
+          <h4>${item.title}</h4>
+        </div>
+      `;
+      grid.appendChild(itemElement);
+    });
+  }
+
+  filterButtons.forEach(btn => {
+    btn.addEventListener('click', (e) => {
+      filterButtons.forEach(b => b.classList.remove('active'));
+      e.target.classList.add('active');
+      renderGrid(e.target.dataset.filter);
+    });
+  });
+
+  renderGrid(); // Initial paint
+}
+
+// ==========================================
+// 5. INTERACTIVE BEFORE/AFTER SLIDER
+// ==========================================
+
+function initBeforeAfterSlider() {
+  const wrap = document.getElementById('baWrap');
+  const afterImg = document.getElementById('baAfter');
+  const slider = document.getElementById('baSlider');
+  if (!wrap || !afterImg || !slider) return;
+
+  let isDragging = false;
+
+  const processMove = (clientX) => {
+    const rect = wrap.getBoundingClientRect();
+    let positionX = clientX - rect.left;
+    if (positionX < 0) positionX = 0;
+    if (positionX > rect.width) positionX = rect.width;
+
+    const percentage = (positionX / rect.width) * 100;
+    slider.style.left = `${percentage}%`;
+    afterImg.style.clipPath = `inset(0 0 0 ${percentage}%)`;
+  };
+
+  const startDrag = () => { isDragging = true; };
+  const stopDrag = () => { isDragging = false; };
+
+  slider.addEventListener('mousedown', startDrag);
+  window.addEventListener('mouseup', stopDrag);
+  window.addEventListener('mousemove', (e) => { if (isDragging) processMove(e.clientX); });
+
+  slider.addEventListener('touchstart', startDrag);
+  window.addEventListener('touchend', stopDrag);
+  window.addEventListener('touchmove', (e) => { if (isDragging && e.touches[0]) processMove(e.touches[0].clientX); });
+}
+
+// ==========================================
+// 6. METRIC WRAPPER (COUNTER ANIMATOR)
+// ==========================================
+
+function initCounterAnimations() {
+  const counters = document.querySelectorAll('[data-count]');
+  
+  const animateCount = (el) => {
+    const target = +el.dataset.count;
+    const duration = 1800;
+    const startTime = performance.now();
+
+    const frame = (currentTime) => {
+      const progress = Math.min((currentTime - startTime) / duration, 1);
+      el.textContent = Math.floor(progress * target).toLocaleString() + '+';
+      if (progress < 1) requestAnimationFrame(frame);
+    };
+    requestAnimationFrame(frame);
+  };
+
+  const counterObserver = new IntersectionObserver((entries) => {
+    entries.forEach(entry => {
+      if (entry.isIntersecting) {
+        animateCount(entry.target);
+        counterObserver.unobserve(entry.target);
+      }
+    });
+  }, { threshold: 0.5 });
+
+  counters.forEach(c => counterObserver.observe(c));
+}
+
+// ==========================================
+// 7. ARITHMETIC REVENUE / ESTIMATION MACHINE
+// ==========================================
+
+function initQuoteCalculator() {
+  const elements = {
+    product: document.getElementById('qProduct'),
+    width: document.getElementById('qW'),
+    height: document.getElementById('qH'),
+    qty: document.getElementById('qQty'),
+    install: document.getElementById('qInstall'),
+    urgent: document.getElementById('qUrgent'),
+    output: document.getElementById('qPrice')
+  };
+
+  if (!elements.output) return;
+
+  const calculatePrice = () => {
+    const baseUnitPrice = parseFloat(elements.product.value) || 0;
+    const width = Math.max(1, parseFloat(elements.width.value) || 1);
+    const height = Math.max(1, parseFloat(elements.height.value) || 1);
+    const quantity = Math.max(1, parseInt(elements.qty.value) || 1);
+    const installationFee = parseFloat(elements.install.value) || 0;
+    const urgencyMultiplier = parseFloat(elements.urgent.value) || 1;
+
+    let aggregateValue = 0;
+    
+    // Check if item is calculated per unit piece or per square foot area
+    if (baseUnitPrice === 8 || baseUnitPrice === 120) {
+      // Per Piece Calculations (Visiting cards / Standees)
+      aggregateValue = (baseUnitPrice * quantity) + installationFee;
+    } else {
+      // Large Format Dimension Surface Area Scale Calculations
+      const surfaceArea = width * height;
+      aggregateValue = (surfaceArea * baseUnitPrice * quantity) + installationFee;
+    }
+
+    const netEstimatedPrice = Math.round(aggregateValue * urgencyMultiplier);
+    elements.output.textContent = netEstimatedPrice.toLocaleString('en-IN');
+  };
+
+  Object.values(elements).forEach(element => {
+    if (element && element !== elements.output) {
+      element.addEventListener('input', calculatePrice);
+    }
+  });
+
+  calculatePrice(); // Fire runtime generation fallback baseline
+}
+
+// ==========================================
+// 8. INTERNATIONALIZATION (I18N) LOGIC
+// ==========================================
+
+function initLocalization() {
+  const langSelector = document.getElementById('langSel');
+  if (!langSelector) return;
+
+  const applyTranslation = (lang) => {
+    const diction = TRANSLATIONS[lang] || TRANSLATIONS['en'];
+    document.querySelectorAll('[data-i18n]').forEach(element => {
+      const translationKey = element.getAttribute('data-i18n');
+      if (diction[translationKey]) {
+        // Use innerHTML for text nodes containing formatting elements (e.g., <span>)
+        if (element.tagName === 'H1' || translationKey.includes('title')) {
+          element.innerHTML = diction[translationKey];
+        } else {
+          element.textContent = diction[translationKey];
+        }
+      }
+    });
+  };
+
+  langSelector.addEventListener('change', (e) => {
+    applyTranslation(e.target.value);
+  });
+}/* ===== Progress Bar & Scroll Tracking ===== */
+    window.addEventListener('scroll', () => {
+      const h = document.documentElement;
+      const p = (h.scrollTop / (h.scrollHeight - h.clientHeight)) * 100;
+      document.getElementById('progress').style.width = p + '%';
+      document.getElementById('nav').classList.toggle('scrolled', window.scrollY > 50);
+    });
+    /* ===== Mobile Menu Handling ===== */
+    document.getElementById('burger').addEventListener('click', () => {
+      document.getElementById('navMenu').classList.toggle('open');
+    });
+    document.querySelectorAll('#navMenu a').forEach(a => a.addEventListener('click', () => document.getElementById('navMenu').classList.remove('open')));
+    /* ===== UI Theme Switcher ===== */
+    const themeBtn = document.getElementById('themeBtn');
+    themeBtn.addEventListener('click', () => {
+      const cur = document.documentElement.getAttribute('data-theme');
+      const next = cur === 'dark' ? 'light' : 'dark';
+      document.documentElement.setAttribute('data-theme', next);
+      themeBtn.textContent = next === 'dark' ? '🌙' : '☀️';
+    });
+    /* ===== Text Stats Counter Engine ===== */
+    const counters = document.querySelectorAll('[data-count]');
+    const animateCount = (el) => {
+      const target = +el.dataset.count;
+      const dur = 1800;
+      const start = performance.now();
+      const step = (t) => {
+        const p = Math.min((t - start) / dur, 1);
+        el.textContent = Math.floor(p * target).toLocaleString() + (target >= 1000 ? '+' : '+');
+        if (p < 1) requestAnimationFrame(step);
+      };
+      requestAnimationFrame(step);
+    };
+    const cObs = new IntersectionObserver((es) => es.forEach(e => {
+      if (e.isIntersecting) {
+        animateCount(e.target);
+        cObs.unobserve(e.target);
+      }
+    }), {
+      threshold: .5
+    });
+    counters.forEach(c => cObs.observe(c));
+    /* ===== Viewport Scroll Element Revelations ===== */
+    const rObs = new IntersectionObserver((es) => es.forEach(e => {
+      if (e.isIntersecting) {
+        e.target.classList.add('in');
+        rObs.unobserve(e.target);
+      }
+    }), {
+      threshold: .1
+    });
+    document.querySelectorAll('.reveal').forEach(el => rObs.observe(el));
+    /* ===== Interactive Portfolio Engine ===== */
+    const portData = [{
+        cat: 'corporate',
+        t: 'HDFC Bank Façade',
+        i: 'https://images.unsplash.com/photo-1554469384-e58fac16e23a?w=600'
+      },
+      {
+        cat: 'corporate',
+        t: 'Apollo Hospital Signage',
+        i: 'https://images.unsplash.com/photo-1586717791821-3f44a563fa4c?w=600'
+      },
+      {
+        cat: 'corporate',
+        t: 'TCS Office Branding',
+        i: 'https://images.unsplash.com/photo-1497366216548-37526070297c?w=600'
+      },
+      {
+        cat: 'political',
+        t: 'Election Rally Stage',
+        i: 'https://images.unsplash.com/photo-1529107386315-e1a2ed48a620?w=600'
+      },
+      {
+        cat: 'political',
+        t: 'Road Show Branding',
+        i: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=600'
+      },
+      {
+        cat: 'political',
+        t: 'LED Campaign Van',
+        i: 'https://images.unsplash.com/photo-1533518463841-d62e1fc91c79?w=600'
+      },
+      {
+        cat: 'events',
+        t: 'Grand Wedding Stage',
+        i: 'https://images.unsplash.com/photo-1519741497674-611481863552?w=600'
+      },
+      {
+        cat: 'retail',
+        t: 'Zara Storefront Glow Sign',
+        i: 'https://images.unsplash.com/photo-1567401893930-f17285a5bc9a?w=600'
+      },
+      {
+        cat: 'vehicle',
+        t: 'Agri Logistics Fleet Wrap',
+        i: 'https://images.unsplash.com/photo-1516574187841-cb9cc2ca948b?w=600'
+      }
+    ];
+    const renderPortfolio = (filter = 'all') => {
+      const grid = document.getElementById('portGrid');
+      grid.innerHTML = '';
+      portData.filter(d => filter === 'all' || d.cat === filter).forEach(item => {
+        const div = document.createElement('div');
+        div.className = 'port-item reveal in';
+        div.innerHTML = `
+      <img src="${item.i}" alt="${item.t}">
+      <div class="port-overlay">
+        <span class="cat">${item.cat}</span>
+        <h4>${item.t}</h4>
+      </div>
+    `;
+        grid.appendChild(div);
+      });
+    };
+    renderPortfolio();
+    document.querySelectorAll('.filter-btn').forEach(btn => {
+      btn.addEventListener('click', (e) => {
+        document.querySelectorAll('.filter-btn').forEach(b => b.classList.remove('active'));
+        e.target.classList.add('active');
+        renderPortfolio(e.target.dataset.filter);
+      });
+    });
+    /* ===== Before / After Slider Interaction ===== */
+    const baWrap = document.getElementById('baWrap');
+    const baAfter = document.getElementById('baAfter');
+    const baSlider = document.getElementById('baSlider');
+    if (baWrap && baAfter && baSlider) {
+      const moveSlider = (x) => {
+        let rect = baWrap.getBoundingClientRect();
+        let pos = (x - rect.left) / rect.width * 100;
+        if (pos < 0) pos = 0;
+        if (pos > 100) pos = 100;
+        baAfter.style.clipPath = `inset(0 0 0 ${pos}%)`;
+        baSlider.style.left = `${pos}%`;
+      };
+      baWrap.addEventListener('mousemove', (e) => moveSlider(e.clientX));
+      baWrap.addEventListener('touchmove', (e) => moveSlider(e.touches[0].clientX));
+    }
+    /* ===== Real-Time Dynamic Quote Matrix Calculator ===== */
+    const calcPrice = () => {
+      const rate = parseFloat(document.getElementById('qProduct').value);
+      const w = parseFloat(document.getElementById('qW').value) || 0;
+      const h = parseFloat(document.getElementById('qH').value) || 0;
+      const qty = parseFloat(document.getElementById('qQty').value) || 1;
+      const install = parseFloat(document.getElementById('qInstall').value);
+      const urgency = parseFloat(document.getElementById('qUrgent').value);
+      let basePrice = 0;
+      if (rate === 8) { // Fixed pricing calculation strategy for standalone unit products (Visiting Cards)
+        basePrice = (rate * qty);
+      } else { // Volumetric square feet based dynamic dimension logic 
+        basePrice = (w * h * rate * qty);
+      }
+      const finalPrice = Math.round((basePrice + install) * urgency);
+      document.getElementById('qPrice').textContent = finalPrice.toLocaleString('en-IN');
+    };
+    document.querySelectorAll('.calc input, .calc select').forEach(el => el.addEventListener('input', calcPrice));
+    calcPrice();
+    /* ===== Multi-Lingual Internalization Engine Architecture ===== */
+    const i18n = {
+      en: {
+        nav_services: "Services",
+        nav_portfolio: "Portfolio",
+        nav_machines: "Machines",
+        nav_tatkal: "Tatkal",
+        nav_industries: "Industries",
+        nav_blog: "Blog",
+        nav_contact: "Contact",
+        nav_quote: "Get Quote",
+        hero_badge: "PAN India • 24/7 Production • 15+ Years",
+        hero_title: "We Print.<br>We Build.<br><span>We Brand.</span>",
+        hero_sub: "Corporate Branding • Flex Printing • Political Campaigns • Event Branding • Fabrication • Installation — all under one roof.",
+        cta_quote: "⚡ Get Instant Quote",
+        cta_portfolio: "View Portfolio →",
+        stat_projects: "Projects Delivered",
+        stat_clients: "Corporate Clients",
+        stat_political: "Political Campaigns",
+        stat_years: "Years Experience",
+        svc_eyebrow: "What We Do",
+        svc_title: "End-to-End Branding Services",
+        svc_sub: "From concept to installation — one partner for every branding need.",
+        port_eyebrow: "Our Work",
+        port_title: "Portfolio That Speaks",
+        port_sub: "5000+ projects delivered across India. Filter by category."
+      },
+      hi: {
+        nav_services: "सेवाएं",
+        nav_portfolio: "पोर्टफोलियो",
+        nav_machines: "मशीनें",
+        nav_tatkal: "तत्काल प्रिंट",
+        nav_industries: "उद्योग",
+        nav_blog: "ब्लॉग",
+        nav_contact: "संपर्क करें",
+        nav_quote: "कोटेशन लें",
+        hero_badge: "पैन इंडिया • 24/7 उत्पादन • 15+ वर्ष का अनुभव",
+        hero_title: "हम प्रिंट करते हैं।<br>हम बनाते हैं।<br><span>हम ब्रांड बनाते हैं।</span>",
+        hero_sub: "कॉर्पोरेट ब्रांडिंग • फ्लेक्स प्रिंटिंग • राजनीतिक अभियान • इवेंट ब्रांडिंग • फैब्रिकेशन • इंस्टॉलेशन — सब एक ही छत के नीचे।",
+        cta_quote: "⚡ तत्काल कोटेशन",
+        cta_portfolio: "पोर्टफोलियो देखें →",
+        stat_projects: "सफल प्रोजेक्ट्स",
+        stat_clients: "कॉर्पोरेट ग्राहक",
+        stat_political: "राजनीतिक अभियान",
+        stat_years: "वर्षों का अनुभव",
+        svc_eyebrow: "हम क्या करते हैं",
+        svc_title: "शुरुआत से अंत तक ब्रांडिंग सेवाएं",
+        svc_sub: "अवधारणा से लेकर स्थापना तक — हर ब्रांडिंग आवश्यकता के लिए एक अनूठा भागीदार।",
+        port_eyebrow: "हमारा काम",
+        port_title: "काम जो बोलता है",
+        port_sub: "पूरे भारत में 5000+ प्रोजेक्ट्स वितरित किए गए। श्रेणी के अनुसार फ़िल्टर करें।"
+      },
+      mr: {
+        nav_services: "सेवा",
+        nav_portfolio: "पोर्टफोलिओ",
+        nav_machines: "मशीनरी",
+        nav_tatkal: "तातडीची सेवा",
+        nav_industries: "उद्योग क्षेत्र",
+        nav_blog: "ब्लॉग",
+        nav_contact: "संपर्क",
+        nav_quote: "दरपत्रक मिळवा",
+        hero_badge: "पॅन इंडिया • 24/7 उत्पादन • 15+ वर्षे अनुभव",
+        hero_title: "आम्ही प्रिंट करतो.<br>आम्ही बनवतो.<br><span>आम्ही ब्रँड घडवतो.</span>",
+        hero_sub: "कॉर्पोरेट ब्रँडिंग • फ्लेक्स प्रिंटिंग • राजकीय प्रचार मोहीम • इव्हेंट ब्रँडिंग • फॅब्रिकेशन • इन्स्टॉलेशन — सर्व काही एकाच छताखाली.",
+        cta_quote: "⚡ त्वरित दरपत्रक",
+        cta_portfolio: "पोर्टफोलिओ पहा →",
+        stat_projects: "वितरित केलेले प्रोजेक्ट्स",
+        stat_clients: "कॉर्पोरेट ग्राहक",
+        stat_political: "राजकीय मोहिमा",
+        stat_years: "वर्षांचा अनुभव",
+        svc_eyebrow: "आम्ही काय करतो",
+        svc_title: "एंड-टू-एंड ब्रँडिंग सेवा",
+        svc_sub: "संकल्पनेपासून ते इन्स्टॉलेशनपर्यंत — प्रत्येक ब्रँडिंग गरजेसाठी एकच विश्वासू भागीदार.",
+        port_eyebrow: "आमचे काम",
+        port_title: "उत्कृष्टतेची प्रचिती",
+        port_sub: "भारतभर 5000+ पेक्षा जास्त प्रोजेक्ट्स पूर्ण. श्रेणीनुसार फिल्टर करा।"
+      }
+    };
+    document.getElementById('langSel').addEventListener('change', (e) => {
+      const lang = e.target.value;
+      document.querySelectorAll('[data-i18n]').forEach(el => {
+        const key = el.getAttribute('data-i18n');
+        if (i18n[lang] && i18n[lang][key]) {
+          el.innerHTML = i18n[lang][key];
+        }
+      });
+    });
+  </script>
+</body>
+</html>
