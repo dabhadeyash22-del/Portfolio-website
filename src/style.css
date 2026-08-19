@@ -131,9 +131,23 @@ header .header-container {
     color: var(--accent);
 }
 
+.logo .logo-collapse {
+    max-width: 50px;
+    opacity: 1;
+    overflow: hidden;
+    display: inline-block;
+    transition: max-width 0.4s cubic-bezier(0.25, 0.8, 0.25, 1), opacity 0.3s ease;
+    white-space: nowrap;
+}
+
 .logo:hover .logo-expand {
     max-width: 150px;
     opacity: 1;
+}
+
+.logo:hover .logo-collapse {
+    max-width: 0;
+    opacity: 0;
 }
 
 .logo:hover {
