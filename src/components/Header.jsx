@@ -28,7 +28,7 @@ export default function Header() {
   return (
     <header>
       <div className="header-container">
-        <a href="#home" className="logo">Yash<span className="logo-expand">.Dabhade</span></a>
+        <a href="#home" className="logo">Yash <span className="logo-expand">Dabhade</span><span className="logo-collapse">D.</span></a>
         
         <nav className={navActive ? 'active' : ''}>
           <a href="#home" onClick={() => setNavActive(false)}>Home</a>
