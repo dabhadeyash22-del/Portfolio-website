@@ -31,7 +31,7 @@ export default function Projects() {
       title: "YAURA AI Agent",
       desc: "A modular python multi-agent execution framework with Flask visual logging, local database indexing, and Gemini integration pipelines.",
       tags: ["Python", "Flask", "Gemini API", "SQLite"],
-      url: "https://dabhadeyash22-del.github.io/Portfolio-website/" // local agent telemetry simulation
+      url: "https://printzone-unit.github.io/print-zone-website/index.html" // local agent telemetry simulation
     },
     {
       category: "web",
